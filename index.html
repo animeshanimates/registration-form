@@ -3,771 +3,683 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CLEAR LAW | Article Submission</title>
+    <title>CLEAR LAW | Author Registration</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600&display=swap');
 
-        /* CSS Variables for absolute minimalism */
+        /* --- DESIGN SYSTEM & VARIABLES --- */
         :root {
-            --bg-color: #000000;
-            --text-color: #FFFFFF;
-            --border-color: rgba(255, 255, 255, 0.4);
-            --border-focus: #FFFFFF;
-            --placeholder-color: rgba(255, 255, 255, 0.5);
-            --transition-speed: 0.4s;
-            --easing: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            --bg: #000000;
+            --text-main: #FFFFFF;
+            --text-muted: rgba(255, 255, 255, 0.5);
+            --border-idle: rgba(255, 255, 255, 0.2);
+            --border-active: #FFFFFF;
+            --error: #ff4d4d;
+            --ease-fluid: cubic-bezier(0.16, 1, 0.3, 1);
+            --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.1);
+            --transition-fast: 0.3s var(--ease-fluid);
+            --transition-slow: 0.6s var(--ease-fluid);
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
+            background-color: var(--bg);
+            color: var(--text-main);
             font-family: 'Montserrat', sans-serif;
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
-            padding: 40px 20px;
+            -moz-osx-font-smoothing: grayscale;
+            padding: 60px 20px;
             opacity: 0;
-            animation: pageLoad 1s var(--easing) forwards;
+            animation: formReveal 1.2s var(--ease-fluid) forwards;
         }
 
-        @keyframes pageLoad {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* --- PROGRESS BAR --- */
+        #progress-bar {
+            position: fixed;
+            top: 0; left: 0;
+            height: 2px;
+            background-color: var(--text-main);
+            width: 0%;
+            z-index: 1000;
+            transition: width 0.5s var(--ease-fluid);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
         }
 
+        /* --- TYPOGRAPHY --- */
         .container {
-            max-width: 650px;
+            max-width: 600px;
             margin: 0 auto;
         }
 
+        header {
+            margin-bottom: 50px;
+        }
+
         h1 {
-            font-weight: 600;
-            font-size: 24px;
-            letter-spacing: 2px;
-            margin-bottom: 20px;
+            font-weight: 300;
+            font-size: 28px;
+            letter-spacing: 3px;
             text-transform: uppercase;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 15px;
-            position: relative;
-        }
-
-        /* Animated Title Underline */
-        h1::after {
-            content: '';
-            position: absolute;
-            bottom: -1px; left: 0;
-            width: 0; height: 1px;
-            background-color: var(--text-color);
-            animation: drawLine 1.5s var(--easing) 0.5s forwards;
-        }
-
-        @keyframes drawLine {
-            to { width: 100%; }
+            margin-bottom: 20px;
         }
 
         h2 {
-            font-weight: 500;
-            font-size: 18px;
-            letter-spacing: 1px;
-            margin: 40px 0 20px 0;
+            font-weight: 400;
+            font-size: 16px;
+            letter-spacing: 2px;
             text-transform: uppercase;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 10px;
+            color: var(--text-muted);
+            margin: 50px 0 30px 0;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        h2::after {
+            content: '';
+            flex-grow: 1;
+            height: 1px;
+            background-color: var(--border-idle);
         }
 
         p {
             font-weight: 300;
-            font-size: 14px;
-            margin-bottom: 30px;
-            color: rgba(255, 255, 255, 0.9);
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 20px;
         }
 
         a {
-            color: var(--text-color);
+            color: var(--text-main);
             text-decoration: none;
-            border-bottom: 1px solid var(--text-color);
-            transition: opacity var(--transition-speed);
+            border-bottom: 1px solid var(--border-idle);
+            transition: border-color var(--transition-fast);
         }
 
-        a:hover {
-            opacity: 0.6;
-            border-bottom-style: dashed;
-        }
+        a:hover { border-bottom-color: var(--text-main); }
 
-        /* Form Group & Inputs */
+        /* --- FLOATING LABEL INPUTS (The UI Upgrade) --- */
         .form-group {
-            margin-bottom: 25px;
             position: relative;
-            /* For JS staggered animation */
-            opacity: 1; 
+            margin-bottom: 35px;
+            opacity: 1;
             transform: translateY(0);
-            transition: opacity 0.5s var(--easing), transform 0.5s var(--easing);
+            transition: opacity var(--transition-slow), transform var(--transition-slow);
         }
 
-        .form-group.stagger-hidden {
+        .form-group.hidden {
             opacity: 0;
-            transform: translateY(15px);
-        }
-
-        /* Animated expanding bottom border on focus */
-        .form-group::after {
-            content: '';
+            transform: translateY(20px);
+            pointer-events: none;
             position: absolute;
-            bottom: 0; left: 50%;
-            width: 0; height: 1px;
-            background-color: var(--border-focus);
-            transition: width var(--transition-speed) var(--easing), left var(--transition-speed) var(--easing);
+            visibility: hidden;
         }
 
-        .form-group:focus-within::after {
-            width: 100%; left: 0;
+        .input-wrapper {
+            position: relative;
+            width: 100%;
         }
 
-        label {
-            display: block;
-            font-size: 12px;
-            font-weight: 500;
-            margin-bottom: 8px;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-            transition: color var(--transition-speed);
+        .float-label {
+            position: absolute;
+            left: 0;
+            top: 15px;
+            font-size: 14px;
+            font-weight: 400;
+            color: var(--text-muted);
+            pointer-events: none;
+            transition: all var(--transition-fast);
         }
 
-        .form-group:focus-within label {
-            color: rgba(255, 255, 255, 0.7);
-        }
-
-        .required::after {
-            content: ' *';
-            color: var(--text-color);
-        }
-
+        /* Input styling */
         input[type="text"],
         input[type="email"],
         input[type="tel"],
         input[type="url"],
-        textarea,
-        select {
+        textarea {
             width: 100%;
-            background-color: transparent;
+            background: transparent;
             border: none;
-            border-bottom: 1px solid var(--border-color);
-            color: var(--text-color);
-            font-family: 'Montserrat', sans-serif;
-            font-size: 14px;
-            padding: 10px 0;
+            border-bottom: 1px solid var(--border-idle);
+            color: var(--text-main);
+            font-family: inherit;
+            font-size: 15px;
+            padding: 15px 0 10px 0;
             outline: none;
             border-radius: 0;
-            transition: padding var(--transition-speed) var(--easing);
+            transition: border-color var(--transition-fast);
         }
 
         textarea {
             resize: vertical;
-            min-height: 80px;
+            min-height: 40px;
+            padding-top: 25px; /* Space for label */
         }
 
-        /* Hide default border change to let the pseudo-element handle it */
-        input:focus, textarea:focus, select:focus {
-            border-bottom-color: transparent;
-            padding-left: 5px; /* Micro-interaction: slight indent on type */
+        /* The Magic: Floating the label when input has text or is focused */
+        input:focus ~ .float-label,
+        input:not(:placeholder-shown) ~ .float-label,
+        textarea:focus ~ .float-label,
+        textarea:not(:placeholder-shown) ~ .float-label {
+            top: -10px;
+            font-size: 10px;
+            color: var(--text-main);
+            letter-spacing: 1px;
+            text-transform: uppercase;
         }
 
-        ::placeholder {
-            color: var(--placeholder-color);
-            font-weight: 300;
-            transition: transform var(--transition-speed), opacity var(--transition-speed);
+        input:focus, textarea:focus { border-bottom-color: var(--text-main); }
+
+        /* Hide the actual placeholder text to let the label do the work */
+        input::placeholder, textarea::placeholder { color: transparent; }
+
+        /* --- SELECT DROPDOWNS --- */
+        .static-label {
+            display: block;
+            font-size: 10px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--text-muted);
         }
 
-        input:focus::placeholder, textarea:focus::placeholder {
-            transform: translateX(10px);
-            opacity: 0.2;
-        }
-
-        /* Select Styling */
         select {
-            cursor: pointer;
-            appearance: none;
-            -webkit-appearance: none;
-        }
-        
-        select option {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-        }
-
-        /* Radio & Checkbox Styling */
-        .radio-group, .checkbox-group {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 25px;
+            width: 100%;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid var(--border-idle);
+            color: var(--text-main);
+            font-family: inherit;
             font-size: 14px;
-            font-weight: 300;
-        }
-
-        .radio-group label, .checkbox-group label {
-            display: flex;
-            align-items: center;
-            margin: 0;
+            padding: 10px 0;
+            outline: none;
             cursor: pointer;
-            text-transform: none;
-            letter-spacing: 0;
-            transition: transform 0.2s ease;
-        }
-
-        .radio-group label:hover, .checkbox-group label:hover {
-            transform: translateX(3px);
-        }
-
-        input[type="radio"], input[type="checkbox"] {
             appearance: none;
             -webkit-appearance: none;
-            width: 16px;
-            height: 16px;
-            border: 1px solid var(--border-color);
-            border-radius: 50%;
-            margin-right: 10px;
+            background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23FFFFFF%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+            background-repeat: no-repeat;
+            background-position: right 5px top 50%;
+            background-size: 10px auto;
+            transition: border-color var(--transition-fast);
+        }
+
+        select:focus { border-bottom-color: var(--text-main); }
+        select option { background-color: var(--bg); color: var(--text-main); font-size: 14px; }
+        select:required:invalid { color: var(--text-muted); }
+
+        /* --- CHECKBOXES --- */
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .checkbox-group label {
+            font-size: 13px;
+            font-weight: 300;
+            cursor: pointer;
+            line-height: 1.5;
+            color: var(--text-muted);
+            transition: color var(--transition-fast);
+        }
+
+        .checkbox-group label:hover { color: var(--text-main); }
+
+        input[type="checkbox"] {
+            appearance: none;
+            min-width: 18px;
+            height: 18px;
+            border: 1px solid var(--border-idle);
+            border-radius: 2px;
+            margin-top: 2px;
             outline: none;
             cursor: pointer;
             position: relative;
-            transition: all var(--transition-speed) var(--easing);
+            transition: all var(--transition-fast);
         }
 
-        input[type="checkbox"] {
-            border-radius: 2px;
-        }
-
-        input[type="radio"]:checked, input[type="checkbox"]:checked {
-            border-color: var(--text-color);
-            transform: scale(1.15); /* Pop effect */
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
-        }
-
-        input[type="radio"]:checked::after {
-            content: '';
-            width: 8px;
-            height: 8px;
-            background: var(--text-color);
-            border-radius: 50%;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0);
-            animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        input[type="checkbox"]:checked {
+            border-color: var(--text-main);
         }
 
         input[type="checkbox"]:checked::after {
-            content: '✔';
-            color: var(--text-color);
-            font-size: 11px;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0);
-            animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-        }
-
-        @keyframes popIn {
-            to { transform: translate(-50%, -50%) scale(1); }
-        }
-
-        /* Custom File Uploads */
-        input[type="file"] {
-            display: none;
-        }
-
-        .file-label {
-            display: inline-block;
-            padding: 12px 20px;
-            border: 1px dashed var(--border-color);
-            font-size: 12px;
-            font-weight: 500;
-            cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: all var(--transition-speed) var(--easing);
-            width: 100%;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .file-label:hover {
-            border-color: var(--text-color);
-            border-style: solid;
-            background-color: rgba(255, 255, 255, 0.05);
-            letter-spacing: 2px;
-        }
-        
-        .file-label.file-selected {
-            border-style: solid;
-            border-color: var(--text-color);
-            background-color: var(--text-color);
-            color: var(--bg-color);
-            font-weight: 600;
-        }
-
-        /* QR Code Placeholder */
-        .qr-box {
-            width: 180px;
-            height: 180px;
-            border: 1px solid var(--border-color);
-            margin: 20px auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 20px;
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            background: repeating-linear-gradient(
-                45deg,
-                transparent,
-                transparent 10px,
-                rgba(255,255,255,0.03) 10px,
-                rgba(255,255,255,0.03) 20px
-            );
-            transition: border-color var(--transition-speed), transform var(--transition-speed);
-        }
-
-        .qr-box:hover {
-            border-color: var(--text-color);
-            transform: scale(1.02);
-        }
-
-        /* Submit Button */
-        button[type="submit"] {
-            width: 100%;
-            background-color: transparent;
-            color: var(--text-color);
-            border: 1px solid var(--text-color);
-            padding: 18px;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 14px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            cursor: pointer;
-            margin-top: 30px;
-            position: relative;
-            overflow: hidden;
-            z-index: 1;
-            transition: color var(--transition-speed);
-        }
-
-        /* Sweep Effect */
-        button[type="submit"]::before {
             content: '';
             position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-color: var(--text-color);
-            z-index: -1;
-            transform: scaleX(1);
-            transform-origin: right;
-            transition: transform 0.5s var(--easing);
+            left: 5px; top: 1px;
+            width: 5px; height: 10px;
+            border: solid var(--text-main);
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+            animation: drawCheck 0.3s var(--ease-spring) forwards;
         }
+
+        @keyframes drawCheck {
+            0% { width: 0; height: 0; opacity: 0; }
+            100% { width: 5px; height: 10px; opacity: 1; }
+        }
+
+        /* --- SUBMIT BUTTON --- */
+        .btn-wrapper { margin-top: 60px; }
 
         button[type="submit"] {
-            color: var(--bg-color); /* Initial state: white bg, black text */
+            width: 100%;
+            background-color: var(--text-main);
+            color: var(--bg);
+            border: none;
+            padding: 20px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.2s var(--ease-fluid);
         }
 
-        button[type="submit"]:hover::before {
-            transform: scaleX(0);
-            transform-origin: left;
+        button[type="submit"]:hover { transform: translateY(-2px); }
+        button[type="submit"]:active { transform: translateY(1px); }
+
+        /* The liquid hover fill effect */
+        button[type="submit"]::after {
+            content: '';
+            position: absolute;
+            top: 100%; left: 0;
+            width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.1);
+            transition: top 0.4s var(--ease-fluid);
         }
 
-        button[type="submit"]:hover {
-            color: var(--text-color); /* Hover state: black bg, white text */
-        }
+        button[type="submit"]:hover::after { top: 0; }
 
         button[type="submit"]:disabled {
-            opacity: 0.5;
+            background-color: var(--border-idle);
+            color: var(--text-muted);
             cursor: not-allowed;
+            transform: none;
         }
 
-        button[type="submit"]:disabled::before {
-            transform: scaleX(1);
-            background-color: var(--border-color);
+        /* --- REQUIRED INDICATOR --- */
+        .req { color: var(--text-main); margin-left: 2px; }
+
+        /* --- ANIMATIONS --- */
+        @keyframes formReveal {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Section Visibility & Animation */
-        .form-section {
-            display: none;
+        .fade-in { animation: fadeIn 0.6s var(--ease-fluid) forwards; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .form-section.active {
-            display: block;
-        }
-
-        /* Notification */
+        /* System Notification */
         .notification {
-            display: none;
-            padding: 20px;
-            margin-top: 20px;
-            border: 1px solid var(--text-color);
-            text-align: center;
-            font-weight: 500;
+            position: fixed;
+            bottom: 30px; left: 50%;
+            transform: translateX(-50%) translateY(50px);
+            background: var(--text-main);
+            color: var(--bg);
+            padding: 15px 30px;
+            font-size: 12px;
+            font-weight: 600;
             letter-spacing: 1px;
             text-transform: uppercase;
-            animation: fadeUp 0.4s ease forwards;
+            opacity: 0;
+            transition: all var(--transition-slow);
+            pointer-events: none;
+            z-index: 2000;
         }
 
-        .notification.success {
-            display: block;
-            background: rgba(255, 255, 255, 0.1);
+        .notification.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
         }
 
-        .notification.error {
-            display: block;
-            border-color: #ff3333;
-            color: #ff3333;
-        }
     </style>
 </head>
 <body>
 
+<div id="progress-bar"></div>
+
 <div class="container">
-    <h1>CLEAR LAW ARTICLE SUBMISSION</h1>
-    <p>Thank you for your interest in getting your writing published on CLEAR LAW. Kindly review the <a href="#" target="_blank">Author's Agreement</a> & <a href="#" target="_blank">Submission Guidelines</a> and then complete the form below.</p>
+    <header>
+        <h1>Author Registration</h1>
+        <p>Thank you for your interest in getting your writing published on CLEARLAW. Kindly review the <a href="#" target="_blank">Author's Agreement</a> & <a href="#" target="_blank">Submission Guidelines</a>. Registration leads to automated subscription to clearlaw.online.</p>
+    </header>
 
-    <form id="submissionForm">
+    <form id="registrationForm">
         
-        <div id="section-1" class="form-section active">
+        <div id="section-1">
             <div class="form-group">
-                <label class="required" for="email">Email ID</label>
-                <input type="email" id="email" name="email" placeholder="author@domain.com" required>
+                <div class="input-wrapper">
+                    <input type="email" id="email" name="email" placeholder=" " required class="track-progress">
+                    <label class="float-label" for="email">Email <span class="req">*</span></label>
+                </div>
             </div>
 
             <div class="form-group">
-                <label class="required">Authorship Type</label>
-                <div class="radio-group">
-                    <label>
-                        <input type="radio" name="authorship_type" value="Solo Authorship" required>
-                        Solo Authorship
-                    </label>
-                    <label>
-                        <input type="radio" name="authorship_type" value="Co-Authorship" required>
-                        Co-Authorship
-                    </label>
+                <div class="input-wrapper">
+                    <input type="text" id="author_name" name="author_name" placeholder=" " required class="track-progress">
+                    <label class="float-label" for="author_name">Author's Name (First and Last) <span class="req">*</span></label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="input-wrapper">
+                    <input type="tel" id="phone" name="phone" placeholder=" " required class="track-progress">
+                    <label class="float-label" for="phone">Phone Number <span class="req">*</span></label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="input-wrapper">
+                    <input type="url" id="linkedin" name="linkedin" placeholder=" ">
+                    <label class="float-label" for="linkedin">LinkedIn Profile URL (Optional)</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="static-label" for="status">Current Academic/Professional Status <span class="req">*</span></label>
+                <select id="status" name="status" required class="track-progress">
+                    <option value="" disabled selected>Select your status</option>
+                    <option value="Law Student">Law Student</option>
+                    <option value="Advocate / Lawyer">Advocate / Lawyer</option>
+                    <option value="Academician">Academician</option>
+                    <option value="Legal Consultant">Legal Consultant</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <div class="input-wrapper">
+                    <input type="text" id="court" name="court" placeholder=" ">
+                    <label class="float-label" for="court">If Advocate, Which Court Do You Practice In?</label>
                 </div>
             </div>
         </div>
 
-        <div id="section-2" class="form-section">
-            <h2>Solo Authorship</h2>
-            
-            <div class="form-group stagger-hidden">
-                <label class="required" for="solo_name">Full Name</label>
-                <input type="text" id="solo_name" name="solo_name" class="req-solo" placeholder="John Doe">
-            </div>
-
-            <div class="form-group stagger-hidden">
-                <label class="required" for="solo_phone">Phone No.</label>
-                <input type="tel" id="solo_phone" name="solo_phone" class="req-solo" placeholder="+1 234 567 8900">
-            </div>
-
-            <div class="form-group stagger-hidden">
-                <label for="solo_linkedin">Paste your Linkedin Profile Link (If none, leave blank)</label>
-                <input type="url" id="solo_linkedin" name="solo_linkedin" placeholder="https://linkedin.com/in/username">
-            </div>
-
-            <div class="form-group stagger-hidden">
-                <label class="required" for="solo_org">College / University / Organisation</label>
-                <input type="text" id="solo_org" name="solo_org" class="req-solo" placeholder="Harvard Law School">
-            </div>
-
-            <div class="form-group stagger-hidden">
-                <label class="required" for="solo_topic">Topic Submitted</label>
-                <input type="text" id="solo_topic" name="solo_topic" class="req-solo" placeholder="e.g., The Evolution of IP Law">
-            </div>
-
-            <div class="form-group stagger-hidden">
-                <label class="required" for="solo_intro">Brief Intro of Topic (30 to 50 words)</label>
-                <textarea id="solo_intro" name="solo_intro" class="req-solo" placeholder="Provide a short synopsis..."></textarea>
-            </div>
-
-            <div class="form-group stagger-hidden">
-                <label class="required">Submit your completed article (1500 to 2000 words)</label>
-                <label class="file-label" for="solo_article" id="label_solo_article">
-                    Select .doc / .docx File
-                </label>
-                <input type="file" id="solo_article" name="solo_article" class="req-solo file-input" accept=".doc,.docx">
-            </div>
-
-            <div class="form-group checkbox-group stagger-hidden">
-                <label>
-                    <input type="checkbox" name="solo_declaration" class="req-solo">
-                    I confirm that the article submitted is my original work and has not been published elsewhere.
-                </label>
-            </div>
+        <h2>Writing Preferences</h2>
+        
+        <div class="form-group">
+            <label class="static-label" for="domain">Please select the legal domain you wish to write in <span class="req">*</span></label>
+            <select id="domain" name="domain" required class="track-progress">
+                <option value="" disabled selected>Select ONE domain</option>
+                <option value="contract_law">Indian Contract Law (ICA, 1872)</option>
+                <option value="const_law">Constitutional & Administrative Law</option>
+                <option value="criminal_law">Criminal Law (BNS, BNSS & BSA)</option>
+                <option value="cpc_law">Civil Procedure Code (CPC, 1908)</option>
+                <option value="property_law">Property Law (TPA, 1882)</option>
+                <option value="bsa_law">Bharatiya Sakshya Adhinam (2023)</option>
+                <option value="limitation_act">Limitation Act, 1963</option>
+                <option value="consumer_law">Consumer Protection Law</option>
+                <option value="family_law">Family Law</option>
+                <option value="company_law">Company Law & Corporate Governance</option>
+                <option value="ipr_law">Intellectual Property Rights (IPR)</option>
+                <option value="cyber_law">Cyber Law & Technology Law</option>
+                <option value="general_law">General Legal Awareness</option>
+                <option value="commercial_practice">Commercial & Corporate Practice</option>
+                <option value="specialized_litigation">Specialized Litigation Areas</option>
+                <option value="emerging_areas">Emerging & High-Growth Areas</option>
+                <option value="other_topic">Other (Custom Topic)</option>
+            </select>
         </div>
 
-        <div id="section-3" class="form-section">
-            <h2>Co-Authorship</h2>
-            
-            <div class="form-group stagger-hidden">
-                <label class="required" for="coauthor1_name">Author No. 01 (Name)</label>
-                <input type="text" id="coauthor1_name" name="coauthor1_name" class="req-co" placeholder="Primary Author Name">
-            </div>
-
-            <div class="form-group stagger-hidden">
-                <label class="required" for="coauthor2_name">Author No. 02 (Name)</label>
-                <input type="text" id="coauthor2_name" name="coauthor2_name" class="req-co" placeholder="Secondary Author Name">
-            </div>
-
-            <div class="form-group stagger-hidden">
-                <label class="required" for="coauthor_contact_phone">Phone No. of any of the two authors</label>
-                <input type="tel" id="coauthor_contact_phone" name="coauthor_contact_phone" class="req-co" placeholder="+1 234 567 8900">
-            </div>
-
-            <div class="form-group stagger-hidden">
-                <label class="required" for="coauthor1_email">Author No. 01 Email ID</label>
-                <input type="email" id="coauthor1_email" name="coauthor1_email" class="req-co" placeholder="author1@domain.com">
-            </div>
-
-            <div class="form-group stagger-hidden">
-                <label class="required" for="coauthor2_email">Author No. 02 Email ID</label>
-                <input type="email" id="coauthor2_email" name="coauthor2_email" class="req-co" placeholder="author2@domain.com">
-            </div>
-
-            <div class="form-group stagger-hidden">
-                <label for="coauthor1_linkedin">Author No. 01 Linkedin Profile Link</label>
-                <input type="url" id="coauthor1_linkedin" name="coauthor1_linkedin" placeholder="https://linkedin.com/in/author1">
-            </div>
-
-            <div class="form-group stagger-hidden">
-                <label for="coauthor2_linkedin">Author No. 02 Linkedin Profile Link</label>
-                <input type="url" id="coauthor2_linkedin" name="coauthor2_linkedin" placeholder="https://linkedin.com/in/author2">
-            </div>
-
-            <div class="form-group stagger-hidden">
-                <label class="required" for="coauthor_org">College / University / Organisation</label>
-                <input type="text" id="coauthor_org" name="coauthor_org" class="req-co" placeholder="Institution Name">
-            </div>
-
-            <div class="form-group stagger-hidden">
-                <label class="required" for="coauthor_topic">Topic Submitted</label>
-                <input type="text" id="coauthor_topic" name="coauthor_topic" class="req-co" placeholder="e.g., The Evolution of IP Law">
-            </div>
-
-            <div class="form-group stagger-hidden">
-                <label class="required" for="coauthor_intro">Brief Intro of Topic (30 to 50 words)</label>
-                <textarea id="coauthor_intro" name="coauthor_intro" class="req-co" placeholder="Provide a short synopsis..."></textarea>
-            </div>
-
-            <div class="form-group stagger-hidden">
-                <label class="required">Submit your completed article (1500 to 2000 words)</label>
-                <label class="file-label" for="coauthor_article" id="label_coauthor_article">
-                    Select .doc / .docx File
-                </label>
-                <input type="file" id="coauthor_article" name="coauthor_article" class="req-co file-input" accept=".doc,.docx">
-            </div>
-
-            <div class="form-group checkbox-group stagger-hidden">
-                <label>
-                    <input type="checkbox" name="coauthor_declaration" class="req-co">
-                    I confirm that the article submitted is our original work and has not been published elsewhere.
-                </label>
-            </div>
-        </div>
-
-        <div id="shared-sections" class="form-section">
-            
-            <h2>Editorial Preference</h2>
-            <div class="form-group stagger-hidden">
-                <label class="required" for="editorial_preference">Select your preference</label>
-                <select id="editorial_preference" name="editorial_preference" required>
-                    <option value="" disabled selected>Select an option</option>
-                    <option value="Option 1">Standard Review</option>
-                    <option value="Option 2">Express Review</option>
-                    <option value="Option 3">Peer-Reviewed Track</option>
+        <div id="dynamic_topic_wrapper" class="form-group hidden">
+            <label class="static-label" id="dynamic_topic_label" for="selected_topic">Select ONE topic <span class="req">*</span></label>
+            <select id="selected_topic" name="selected_topic" class="dynamic-req track-progress">
                 </select>
-            </div>
+        </div>
 
-            <h2>Priority Editorial Review</h2>
-            <p>Priority Editorial Review: shortens the review timeline; where eligible, allows publication within 72 hours. All articles are assessed on the same editorial standards.</p>
+        <div id="custom_topic_wrapper" class="hidden">
+            <p>Topics submitted under "Other" are subject to editorial approval. Submission does not guarantee acceptance.</p>
             
-            <div class="form-group stagger-hidden">
-                <div class="qr-box">
-                    Scan to pay<br><br>INR 99/- only<br><br>For Priority<br>Editorial Review
+            <div class="form-group">
+                <div class="input-wrapper">
+                    <input type="text" id="custom_proposed" name="custom_proposed" placeholder=" " class="dynamic-req track-progress">
+                    <label class="float-label" for="custom_proposed">Proposed Topic Title <span class="req">*</span></label>
                 </div>
             </div>
 
-            <div class="form-group stagger-hidden">
-                <label class="required">Upload Payment Screenshot</label>
-                <label class="file-label" for="priority_screenshot" id="label_priority_screenshot">
-                    Select Image File
-                </label>
-                <input type="file" id="priority_screenshot" name="priority_screenshot" class="file-input" accept="image/*" required>
+            <div class="form-group">
+                <div class="input-wrapper">
+                    <textarea id="custom_scope" name="custom_scope" placeholder=" " class="dynamic-req track-progress"></textarea>
+                    <label class="float-label" for="custom_scope">Brief scope of topic (2 to 3 lines) <span class="req">*</span></label>
+                </div>
             </div>
+        </div>
 
-            <div class="form-group stagger-hidden">
-                <label class="required" for="priority_transaction_id">UPI Transaction ID / Reference Number</label>
-                <input type="text" id="priority_transaction_id" name="priority_transaction_id" placeholder="12 to 23 digits/alphanumeric" required>
-            </div>
-
-            <div class="form-group stagger-hidden">
-                <label for="referral_code">Referral Code of your Campus Ambassador</label>
-                <input type="text" id="referral_code" name="referral_code" placeholder="Optional">
-            </div>
-
-            <div class="form-group stagger-hidden">
-                <label class="required" for="priority_confirmation">Confirmation</label>
-                <select id="priority_confirmation" name="priority_confirmation" required>
-                    <option value="" disabled selected>Select confirmation</option>
-                    <option value="Paid Successfully">Paid Successfully</option>
-                    <option value="Not Opting for Priority">I am not opting for Priority Review</option>
+        <div id="declaration_section" class="hidden">
+            <h2>Author's Declaration</h2>
+            
+            <div class="form-group">
+                <label class="static-label" for="timeline">When can you submit your article? <span class="req">*</span></label>
+                <select id="timeline" name="timeline" required class="track-progress">
+                    <option value="" disabled selected>Select timeline</option>
+                    <option value="Within 3 Days">Within 3 Days</option>
+                    <option value="Within 1 Week">Within 1 Week</option>
+                    <option value="Within 2 Weeks">Within 2 Weeks</option>
+                    <option value="More than 2 Weeks">More than 2 Weeks</option>
                 </select>
             </div>
 
-            <div class="form-group stagger-hidden">
-                <button type="submit" id="submitBtn">Submit Response</button>
+            <div class="checkbox-group">
+                <input type="checkbox" id="agreement" name="agreement_confirmation" required class="track-progress">
+                <label for="agreement">I confirm that I have read, understood, and unconditionally agree to be bound by the Author's Agreement & Submission Guidelines of CLEARLAW.</label>
+            </div>
+
+            <div class="btn-wrapper">
+                <button type="submit" id="submitBtn">Submit Registration</button>
             </div>
         </div>
         
     </form>
-
-    <div id="notification" class="notification"></div>
 </div>
 
+<div id="sysNotification" class="notification">Message</div>
+
 <script>
-    // --- CONFIGURATION ---
+    // --- APP SCRIPT URL ---
     const GOOGLE_SCRIPT_WEB_APP_URL = "https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec";
-    
+
+    // --- DOMAIN DATA MAP ---
+    // Simulating the 20-section logic effortlessly
+    const topicData = {
+        "contract_law": ["Formation & Validity", "Breach & Damages", "Specific Relief Act", "E-Contracts", "Indemnity & Guarantee"],
+        "const_law": ["Fundamental Rights", "Writ Jurisdiction", "Basic Structure Doctrine", "Administrative Actions", "Federalism"],
+        "criminal_law": ["BNS: New Offenses", "BNSS: Procedural Changes", "White Collar Crimes", "Cyber Crimes under BNS", "Bail Jurisprudence"],
+        "cpc_law": ["Res Judicata", "Injunctions", "Execution of Decrees", "Appeals & Revisions", "Alternative Dispute Resolution"],
+        "property_law": ["Sale & Lease", "Mortgages", "Easement Rights", "Benami Transactions", "RERA Act implications"],
+        "bsa_law": ["Electronic Evidence", "Burden of Proof", "Admissibility of Digital Records", "Expert Opinions", "Confessions"],
+        "limitation_act": ["Condonation of Delay", "Adverse Possession", "Acknowledgment of Debt", "Starting point of limitation"],
+        "consumer_law": ["E-Commerce Rules", "Product Liability", "Medical Negligence", "Deficiency in Service", "Misleading Ads"],
+        "family_law": ["Divorce & Alimony", "Child Custody", "Uniform Civil Code debates", "Maintenance Laws", "Succession & Inheritance"],
+        "company_law": ["Corporate Governance", "Mergers & Acquisitions", "Insolvency & Bankruptcy Code", "Directors Duties", "CSR Regulations"],
+        "ipr_law": ["Trademark Infringement", "Patent Filing Strategies", "Copyright in AI era", "Trade Secrets", "Geographical Indications"],
+        "cyber_law": ["Data Protection (DPDP Act)", "AI & Law", "Cyber Torts", "Cryptocurrency Regulations", "Intermediary Liability"],
+        "general_law": ["Right to Information (RTI)", "Environmental Law", "Labor Codes", "Human Rights", "Public Interest Litigation"],
+        "commercial_practice": ["Arbitration Agreements", "Foreign Direct Investment", "Banking Regulations", "Taxation Laws", "Securities Law (SEBI)"],
+        "specialized_litigation": ["Armed Forces Tribunal", "Green Tribunal (NGT)", "Prevention of Money Laundering Act (PMLA)", "Competition Law (CCI)"],
+        "emerging_areas": ["Space Law", "Sports Law", "Aviation Law", "Gaming & E-Sports Regulations", "Climate Change Litigation"]
+    };
+
     // --- DOM ELEMENTS ---
-    const form = document.getElementById('submissionForm');
-    const radios = document.querySelectorAll('input[name="authorship_type"]');
-    const section2 = document.getElementById('section-2');
-    const section3 = document.getElementById('section-3');
-    const sharedSections = document.getElementById('shared-sections');
-    const reqSoloInputs = document.querySelectorAll('.req-solo');
-    const reqCoInputs = document.querySelectorAll('.req-co');
+    const form = document.getElementById('registrationForm');
+    const domainSelect = document.getElementById('domain');
     
-    // --- MICRO-INTERACTIONS: Custom File Input ---
-    document.querySelectorAll('.file-input').forEach(input => {
-        input.addEventListener('change', function(e) {
-            const labelEl = document.getElementById("label_" + e.target.id);
-            if (e.target.files[0]) {
-                labelEl.innerText = "✔ " + e.target.files[0].name;
-                labelEl.classList.add('file-selected');
-            } else {
-                labelEl.innerText = e.target.id.includes('priority') ? "Select Image File" : "Select .doc / .docx File";
-                labelEl.classList.remove('file-selected');
+    const dynamicWrapper = document.getElementById('dynamic_topic_wrapper');
+    const topicSelect = document.getElementById('selected_topic');
+    const topicLabel = document.getElementById('dynamic_topic_label');
+    
+    const customWrapper = document.getElementById('custom_topic_wrapper');
+    const customReqs = customWrapper.querySelectorAll('.dynamic-req');
+    
+    const declarationSection = document.getElementById('declaration_section');
+    const progressBar = document.getElementById('progress-bar');
+    const inputsForProgress = document.querySelectorAll('.track-progress');
+    const notification = document.getElementById('sysNotification');
+    const submitBtn = document.getElementById('submitBtn');
+
+    // --- LOGIC: Auto Scroll Helper ---
+    function smoothScrollTo(element) {
+        setTimeout(() => {
+            element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 150); // slight delay allowing DOM to paint
+    }
+
+    // --- LOGIC: Progress Bar Calculation ---
+    function updateProgress() {
+        // Count total visible required fields
+        const visibleFields = Array.from(inputsForProgress).filter(el => {
+            // Check if element or its parent wrapper is hidden
+            if (el.closest('.hidden')) return false;
+            return el.hasAttribute('required');
+        });
+
+        const totalRequired = visibleFields.length;
+        let filledRequired = 0;
+
+        visibleFields.forEach(el => {
+            if (el.type === 'checkbox') {
+                if (el.checked) filledRequired++;
+            } else if (el.value.trim() !== '') {
+                filledRequired++;
             }
         });
+
+        const percentage = totalRequired === 0 ? 0 : (filledRequired / totalRequired) * 100;
+        progressBar.style.width = `${percentage}%`;
+    }
+
+    // Attach listeners for live progress tracking
+    inputsForProgress.forEach(input => {
+        input.addEventListener('input', updateProgress);
+        input.addEventListener('change', updateProgress);
     });
 
-    // --- ANIMATION LOGIC: Staggered Fade-In ---
-    function animateSection(section) {
-        const groups = section.querySelectorAll('.stagger-hidden');
-        groups.forEach((group, index) => {
-            setTimeout(() => {
-                group.classList.remove('stagger-hidden');
-            }, 100 * index); // 100ms stagger
+    // --- LOGIC: Dynamic Domain Handling ---
+    domainSelect.addEventListener('change', function() {
+        const selectedValue = this.value;
+        const selectedText = this.options[this.selectedIndex].text;
+
+        // Reset Custom
+        customWrapper.classList.add('hidden');
+        customWrapper.style.position = "absolute";
+        customReqs.forEach(input => {
+            input.removeAttribute('required');
+            input.value = '';
         });
-    }
 
-    function hideSection(section) {
-        section.classList.remove('active');
-        const groups = section.querySelectorAll('.form-group');
-        groups.forEach(group => group.classList.add('stagger-hidden'));
-    }
+        // Reset Dynamic Dropdown
+        dynamicWrapper.classList.add('hidden');
+        dynamicWrapper.style.position = "absolute";
+        topicSelect.removeAttribute('required');
+        topicSelect.innerHTML = '';
 
-    // --- LOGIC: Conditional Form Reveal ---
-    radios.forEach(radio => {
-        radio.addEventListener('change', function() {
-            const selected = this.value;
+        if (selectedValue === 'other_topic') {
+            // Un-hide Custom Inputs
+            customWrapper.classList.remove('hidden');
+            customWrapper.style.position = "relative";
+            customReqs.forEach(input => input.setAttribute('required', 'true'));
             
-            // Show shared sections if hidden, then animate
-            if (!sharedSections.classList.contains('active')) {
-                sharedSections.classList.add('active');
-                animateSection(sharedSections);
-            }
+            smoothScrollTo(customWrapper);
 
-            if (selected === 'Solo Authorship') {
-                section2.classList.add('active');
-                animateSection(section2);
-                hideSection(section3);
-                
-                reqSoloInputs.forEach(input => input.setAttribute('required', 'true'));
-                reqCoInputs.forEach(input => {
-                    input.removeAttribute('required');
-                    if (input.type === 'checkbox' || input.type === 'radio') input.checked = false;
-                    else input.value = '';
-                });
+        } else if (topicData[selectedValue]) {
+            // Build Dynamic Dropdown
+            topicLabel.innerHTML = `Select ONE topic from ${selectedText} <span class="req">*</span>`;
+            
+            let defaultOption = document.createElement('option');
+            defaultOption.value = "";
+            defaultOption.text = "Select a specific topic";
+            defaultOption.disabled = true;
+            defaultOption.selected = true;
+            topicSelect.appendChild(defaultOption);
 
-            } else if (selected === 'Co-Authorship') {
-                section3.classList.add('active');
-                animateSection(section3);
-                hideSection(section2);
-                
-                reqCoInputs.forEach(input => input.setAttribute('required', 'true'));
-                reqSoloInputs.forEach(input => {
-                    input.removeAttribute('required');
-                    if (input.type === 'checkbox' || input.type === 'radio') input.checked = false;
-                    else input.value = '';
-                });
-            }
-        });
+            topicData[selectedValue].forEach(topic => {
+                let opt = document.createElement('option');
+                opt.value = topic;
+                opt.text = topic;
+                topicSelect.appendChild(opt);
+            });
+
+            dynamicWrapper.classList.remove('hidden');
+            dynamicWrapper.style.position = "relative";
+            topicSelect.setAttribute('required', 'true');
+            
+            smoothScrollTo(dynamicWrapper);
+        }
+
+        // Reveal Declaration section if not already shown
+        if (declarationSection.classList.contains('hidden')) {
+            declarationSection.classList.remove('hidden');
+            declarationSection.classList.add('fade-in');
+        }
+
+        // Recalculate progress bar max value based on new visible required fields
+        updateProgress(); 
     });
 
     // --- LOGIC: Form Submission Processing ---
+    function showNotification(message, isError = false) {
+        notification.innerText = message;
+        notification.style.backgroundColor = isError ? "var(--error)" : "var(--text-main)";
+        notification.style.color = isError ? "var(--text-main)" : "var(--bg)";
+        notification.classList.add('show');
+        
+        setTimeout(() => {
+            notification.classList.remove('show');
+        }, 4000);
+    }
+
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
         
-        const submitBtn = document.getElementById('submitBtn');
-        const notification = document.getElementById('notification');
-        
         submitBtn.disabled = true;
-        submitBtn.innerText = 'Submitting...';
-        notification.className = 'notification'; 
-        notification.style.display = 'none';
+        submitBtn.innerText = 'Processing...';
 
         const formData = new FormData(form);
 
         try {
+            // POST to Google Apps Script
             const response = await fetch(GOOGLE_SCRIPT_WEB_APP_URL, {
                 method: 'POST',
                 body: formData,
                 // mode: 'no-cors' 
             });
 
+            // Success state
             form.reset();
             
-            // Reset UI Visuals
-            hideSection(section2);
-            hideSection(section3);
-            hideSection(sharedSections);
+            // Re-hide dynamic sections
+            dynamicWrapper.classList.add('hidden');
+            dynamicWrapper.style.position = "absolute";
+            customWrapper.classList.add('hidden');
+            customWrapper.style.position = "absolute";
+            declarationSection.classList.add('hidden');
+            declarationSection.classList.remove('fade-in');
             
-            document.querySelectorAll('.file-label').forEach(lbl => {
-                lbl.classList.remove('file-selected');
-                if(lbl.id.includes('solo') || lbl.id.includes('coauthor')) lbl.innerText = "Select .doc / .docx File";
-                if(lbl.id.includes('priority')) lbl.innerText = "Select Image File";
-            });
-
-            notification.innerText = "Submission successful! Thank you.";
-            notification.classList.add('success');
+            updateProgress(); // resets bar to 0
+            
+            showNotification("Registration successful! Welcome to CLEAR LAW.");
+            window.scrollTo({ top: 0, behavior: 'smooth' });
             
         } catch (error) {
             console.error('Submission Error:', error);
-            notification.innerText = "Error. Please try again or check your connection.";
-            notification.classList.add('error');
+            showNotification("Connection error. Please try again.", true);
         } finally {
-            notification.style.display = 'block';
             submitBtn.disabled = false;
-            submitBtn.innerText = 'Submit Response';
-            
-            setTimeout(() => {
-                notification.style.display = 'none';
-            }, 6000);
+            submitBtn.innerText = 'Submit Registration';
         }
     });
+
+    // Initial Progress Calculation
+    updateProgress();
 </script>
 </body>
 </html>
