@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CLEAR LAW | Article Submission</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap');
+
+        /* CSS Variables for absolute minimalism */
+        :root {
+            --bg-color: #000000;
+            --text-color: #FFFFFF;
+            --border-color: rgba(255, 255, 255, 0.4);
+            --border-focus: #FFFFFF;
+            --placeholder-color: rgba(255, 255, 255, 0.5);
+            --transition-speed: 0.3s;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Montserrat', sans-serif;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-weight: 600;
+            font-size: 24px;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 15px;
+        }
+
+        h2 {
+            font-weight: 500;
+            font-size: 18px;
+            letter-spacing: 1px;
+            margin: 40px 0 20px 0;
+            text-transform: uppercase;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        p {
+            font-weight: 300;
+            font-size: 14px;
+            margin-bottom: 30px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        a {
+            color: var(--text-color);
+            text-decoration: none;
+            border-bottom: 1px solid var(--text-color);
+            transition: opacity var(--transition-speed);
+        }
+
+        a:hover {
+            opacity: 0.7;
+        }
+
+        /* Form Group & Inputs */
+        .form-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        label {
+            display: block;
+            font-size: 12px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .required::after {
+            content: ' *';
+            color: var(--text-color);
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        textarea,
+        select {
+            width: 100%;
+            background-color: transparent;
+            border: none;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-color);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            padding: 10px 0;
+            outline: none;
+            border-radius: 0;
+            transition: border-color var(--transition-speed);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            border-bottom: 1px solid var(--border-focus);
+        }
+
+        ::placeholder {
+            color: var(--placeholder-color);
+            font-weight: 300;
+        }
+
+        /* Select Styling */
+        select {
+            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+        }
+        
+        select option {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        /* Radio & Checkbox Styling */
+        .radio-group, .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            font-size: 14px;
+            font-weight: 300;
+        }
+
+        .radio-group label, .checkbox-group label {
+            display: flex;
+            align-items: center;
+            margin: 0;
+            cursor: pointer;
+            text-transform: none;
+            letter-spacing: 0;
+        }
+
+        input[type="radio"], input[type="checkbox"] {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            margin-right: 10px;
+            outline: none;
+            cursor: pointer;
+            position: relative;
+            transition: border var(--transition-speed);
+        }
+
+        input[type="checkbox"] {
+            border-radius: 2px;
+        }
+
+        input[type="radio"]:checked, input[type="checkbox"]:checked {
+            border-color: var(--text-color);
+        }
+
+        input[type="radio"]:checked::after {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--text-color);
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        input[type="checkbox"]:checked::after {
+            content: '✔';
+            color: var(--text-color);
+            font-size: 12px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        /* Custom File Uploads */
+        input[type="file"] {
+            display: none;
+        }
+
+        .file-label {
+            display: inline-block;
+            padding: 12px 20px;
+            border: 1px solid var(--border-color);
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all var(--transition-speed);
+            width: 100%;
+            text-align: center;
+        }
+
+        .file-label:hover {
+            border-color: var(--text-color);
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        /* QR Code Placeholder */
+        .qr-box {
+            width: 180px;
+            height: 180px;
+            border: 1px solid var(--text-color);
+            margin: 20px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 10px,
+                rgba(255,255,255,0.05) 10px,
+                rgba(255,255,255,0.05) 20px
+            );
+        }
+
+        /* Submit Button */
+        button[type="submit"] {
+            width: 100%;
+            background-color: var(--text-color);
+            color: var(--bg-color);
+            border: 1px solid var(--text-color);
+            padding: 18px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            margin-top: 30px;
+            transition: all var(--transition-speed);
+        }
+
+        button[type="submit"]:hover {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        button[type="submit"]:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Section Visibility & Animation */
+        .form-section {
+            display: none;
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        .form-section.active {
+            display: block;
+            animation: fadeUp 0.5s forwards ease-out;
+        }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Notification */
+        .notification {
+            display: none;
+            padding: 20px;
+            margin-top: 20px;
+            border: 1px solid var(--text-color);
+            text-align: center;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .notification.success {
+            display: block;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .notification.error {
+            display: block;
+            border-color: #ff3333;
+            color: #ff3333;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>CLEAR LAW ARTICLE SUBMISSION</h1>
+    <p>Thank you for your interest in getting your writing published on CLEAR LAW. Kindly review the <a href="#" target="_blank">Author’s Agreement</a> & <a href="#" target="_blank">Submission Guidelines</a> and then complete the form below.</p>
+
+    <form id="submissionForm">
+        
+        <div id="section-1" class="form-section active">
+            <div class="form-group">
+                <label class="required" for="email">Email ID</label>
+                <input type="email" id="email" name="email" placeholder="author@domain.com" required>
+            </div>
+
+            <div class="form-group">
+                <label class="required">Authorship Type</label>
+                <div class="radio-group">
+                    <label>
+                        <input type="radio" name="authorship_type" value="Solo-Authorship" required>
+                        Solo-Authorship
+                    </label>
+                    <label>
+                        <input type="radio" name="authorship_type" value="Co-Authorship" required>
+                        Co-Authorship
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div id="section-2" class="form-section">
+            <h2>Solo-Authorship</h2>
+            
+            <div class="form-group">
+                <label class="required" for="solo_name">Full Name</label>
+                <input type="text" id="solo_name" name="solo_name" class="req-solo" placeholder="John Doe">
+            </div>
+
+            <div class="form-group">
+                <label class="required" for="solo_phone">Phone No.</label>
+                <input type="tel" id="solo_phone" name="solo_phone" class="req-solo" placeholder="+1 234 567 8900">
+            </div>
+
+            <div class="form-group">
+                <label for="solo_linkedin">Paste your Linkedin Profile Link (If none, leave blank)</label>
+                <input type="url" id="solo_linkedin" name="solo_linkedin" placeholder="https://linkedin.com/in/username">
+            </div>
+
+            <div class="form-group">
+                <label class="required" for="solo_org">College / University / Organisation</label>
+                <input type="text" id="solo_org" name="solo_org" class="req-solo" placeholder="Harvard Law School">
+            </div>
+
+            <div class="form-group">
+                <label class="required" for="solo_topic">Topic Submitted</label>
+                <input type="text" id="solo_topic" name="solo_topic" class="req-solo" placeholder="e.g., The Evolution of IP Law">
+            </div>
+
+            <div class="form-group">
+                <label class="required" for="solo_intro">Brief Intro of Topic (30-50 words)</label>
+                <textarea id="solo_intro" name="solo_intro" class="req-solo" placeholder="Provide a short synopsis..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label class="required">Submit your completed article (1500-2000 words)</label>
+                <label class="file-label" for="solo_article" id="label_solo_article">
+                    Select .doc / .docx File
+                </label>
+                <input type="file" id="solo_article" name="solo_article" class="req-solo file-input" accept=".doc,.docx">
+            </div>
+
+            <div class="form-group checkbox-group">
+                <label>
+                    <input type="checkbox" name="solo_declaration" class="req-solo">
+                    I confirm that the article submitted is my original work and has not been published elsewhere.
+                </label>
+            </div>
+        </div>
+
+        <div id="section-3" class="form-section">
+            <h2>Co-Authorship</h2>
+            
+            <div class="form-group">
+                <label class="required" for="coauthor1_name">Author No. 01 (Name)</label>
+                <input type="text" id="coauthor1_name" name="coauthor1_name" class="req-co" placeholder="Primary Author Name">
+            </div>
+
+            <div class="form-group">
+                <label class="required" for="coauthor2_name">Author No. 02 (Name)</label>
+                <input type="text" id="coauthor2_name" name="coauthor2_name" class="req-co" placeholder="Secondary Author Name">
+            </div>
+
+            <div class="form-group">
+                <label class="required" for="coauthor_contact_phone">Phone No. of any of the two authors</label>
+                <input type="tel" id="coauthor_contact_phone" name="coauthor_contact_phone" class="req-co" placeholder="+1 234 567 8900">
+            </div>
+
+            <div class="form-group">
+                <label class="required" for="coauthor1_email">Author No. 01 Email ID</label>
+                <input type="email" id="coauthor1_email" name="coauthor1_email" class="req-co" placeholder="author1@domain.com">
+            </div>
+
+            <div class="form-group">
+                <label class="required" for="coauthor2_email">Author No. 02 Email ID</label>
+                <input type="email" id="coauthor2_email" name="coauthor2_email" class="req-co" placeholder="author2@domain.com">
+            </div>
+
+            <div class="form-group">
+                <label for="coauthor1_linkedin">Author No. 01 Linkedin Profile Link</label>
+                <input type="url" id="coauthor1_linkedin" name="coauthor1_linkedin" placeholder="https://linkedin.com/in/author1">
+            </div>
+
+            <div class="form-group">
+                <label for="coauthor2_linkedin">Author No. 02 Linkedin Profile Link</label>
+                <input type="url" id="coauthor2_linkedin" name="coauthor2_linkedin" placeholder="https://linkedin.com/in/author2">
+            </div>
+
+            <div class="form-group">
+                <label class="required" for="coauthor_org">College / University / Organisation</label>
+                <input type="text" id="coauthor_org" name="coauthor_org" class="req-co" placeholder="Institution Name">
+            </div>
+
+            <div class="form-group">
+                <label class="required" for="coauthor_topic">Topic Submitted</label>
+                <input type="text" id="coauthor_topic" name="coauthor_topic" class="req-co" placeholder="e.g., The Evolution of IP Law">
+            </div>
+
+            <div class="form-group">
+                <label class="required" for="coauthor_intro">Brief Intro of Topic (30-50 words)</label>
+                <textarea id="coauthor_intro" name="coauthor_intro" class="req-co" placeholder="Provide a short synopsis..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label class="required">Submit your completed article (1500-2000 words)</label>
+                <label class="file-label" for="coauthor_article" id="label_coauthor_article">
+                    Select .doc / .docx File
+                </label>
+                <input type="file" id="coauthor_article" name="coauthor_article" class="req-co file-input" accept=".doc,.docx">
+            </div>
+
+            <div class="form-group checkbox-group">
+                <label>
+                    <input type="checkbox" name="coauthor_declaration" class="req-co">
+                    I confirm that the article submitted is our original work and has not been published elsewhere.
+                </label>
+            </div>
+        </div>
+
+        <div id="shared-sections" class="form-section">
+            
+            <h2>Editorial Preference</h2>
+            <div class="form-group">
+                <label class="required" for="editorial_preference">Select your preference</label>
+                <select id="editorial_preference" name="editorial_preference" required>
+                    <option value="" disabled selected>Select an option</option>
+                    <option value="Option 1">Standard Review</option>
+                    <option value="Option 2">Express Review</option>
+                    <option value="Option 3">Peer-Reviewed Track</option>
+                </select>
+            </div>
+
+            <h2>Priority Editorial Review</h2>
+            <p>Priority Editorial Review: shortens the review timeline; where eligible, allows publication within 72 hours. All articles are assessed on the same editorial standards.</p>
+            
+            <div class="qr-box">
+                Scan to pay<br><br>INR 99/- only<br><br>For Priority<br>Editorial Review
+            </div>
+
+            <div class="form-group">
+                <label class="required">Upload Payment Screenshot</label>
+                <label class="file-label" for="priority_screenshot" id="label_priority_screenshot">
+                    Select Image File
+                </label>
+                <input type="file" id="priority_screenshot" name="priority_screenshot" class="file-input" accept="image/*" required>
+            </div>
+
+            <div class="form-group">
+                <label class="required" for="priority_transaction_id">UPI Transaction ID / Reference Number</label>
+                <input type="text" id="priority_transaction_id" name="priority_transaction_id" placeholder="12–23 digits/alphanumeric" required>
+            </div>
+
+            <div class="form-group">
+                <label for="referral_code">Referral Code of your Campus Ambassador</label>
+                <input type="text" id="referral_code" name="referral_code" placeholder="Optional">
+            </div>
+
+            <div class="form-group">
+                <label class="required" for="priority_confirmation">Confirmation</label>
+                <select id="priority_confirmation" name="priority_confirmation" required>
+                    <option value="" disabled selected>Select confirmation</option>
+                    <option value="Paid Successfully">Paid Successfully</option>
+                    <option value="Not Opting for Priority">I am not opting for Priority Review</option>
+                </select>
+            </div>
+
+            <button type="submit" id="submitBtn">Submit Response</button>
+        </div>
+        
+    </form>
+
+    <div id="notification" class="notification"></div>
+</div>
+
+<script>
+    // --- CONFIGURATION ---
+    // PASTE YOUR GOOGLE APPS SCRIPT WEB APP URL HERE:
+    const GOOGLE_SCRIPT_WEB_APP_URL = "https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec";
+    
+    // --- LOGIC ---
+    const form = document.getElementById('submissionForm');
+    const radios = document.querySelectorAll('input[name="authorship_type"]');
+    
+    const section2 = document.getElementById('section-2');
+    const section3 = document.getElementById('section-3');
+    const sharedSections = document.getElementById('shared-sections');
+    
+    const reqSoloInputs = document.querySelectorAll('.req-solo');
+    const reqCoInputs = document.querySelectorAll('.req-co');
+    
+    // Custom File Input Text Replacer
+    document.querySelectorAll('.file-input').forEach(input => {
+        input.addEventListener('change', function(e) {
+            const fileName = e.target.files[0] ? e.target.files[0].name : "Select File";
+            const labelId = "label_" + e.target.id;
+            document.getElementById(labelId).innerText = fileName;
+        });
+    });
+
+    // Handle Conditional Form Logic
+    radios.forEach(radio => {
+        radio.addEventListener('change', function() {
+            const selected = this.value;
+            
+            // Show shared sections (4 & 5)
+            sharedSections.classList.add('active');
+
+            if (selected === 'Solo-Authorship') {
+                section2.classList.add('active');
+                section3.classList.remove('active');
+                
+                // Enforce solo requirements, disable co-author requirements
+                reqSoloInputs.forEach(input => input.setAttribute('required', 'true'));
+                reqCoInputs.forEach(input => {
+                    input.removeAttribute('required');
+                    input.value = ''; // Clear hidden data
+                });
+
+            } else if (selected === 'Co-Authorship') {
+                section3.classList.add('active');
+                section2.classList.remove('active');
+                
+                // Enforce co-author requirements, disable solo requirements
+                reqCoInputs.forEach(input => input.setAttribute('required', 'true'));
+                reqSoloInputs.forEach(input => {
+                    input.removeAttribute('required');
+                    input.value = ''; // Clear hidden data
+                });
+            }
+        });
+    });
+
+    // Form Submission Handling
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const submitBtn = document.getElementById('submitBtn');
+        const notification = document.getElementById('notification');
+        
+        // UI Loading state
+        submitBtn.disabled = true;
+        submitBtn.innerText = 'Submitting...';
+        notification.className = 'notification'; // Reset class
+        notification.style.display = 'none';
+
+        // Gather form data
+        const formData = new FormData(form);
+
+        try {
+            // Note: Direct file uploads to Google Apps Script via FormData usually require standard HTML Service
+            // or base64 data conversion in JS. This standard fetch relies on a properly configured doPost(e) in GAS.
+            const response = await fetch(GOOGLE_SCRIPT_WEB_APP_URL, {
+                method: 'POST',
+                body: formData,
+                // mode: 'no-cors' // Uncomment if you encounter CORS issues with App Script
+            });
+
+            // Assuming successful submission 
+            form.reset();
+            
+            // Reset UI states
+            section2.classList.remove('active');
+            section3.classList.remove('active');
+            sharedSections.classList.remove('active');
+            document.querySelectorAll('.file-label').forEach(lbl => {
+                if(lbl.id.includes('solo') || lbl.id.includes('coauthor')) lbl.innerText = "Select .doc / .docx File";
+                if(lbl.id.includes('priority')) lbl.innerText = "Select Image File";
+            });
+
+            notification.innerText = "Submission successful! Thank you.";
+            notification.classList.add('success');
+            
+        } catch (error) {
+            console.error('Submission Error:', error);
+            notification.innerText = "Error. Please try again or check your connection.";
+            notification.classList.add('error');
+        } finally {
+            notification.style.display = 'block';
+            submitBtn.disabled = false;
+            submitBtn.innerText = 'Submit Response';
+            
+            // Auto hide notification after 6 seconds
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 6000);
+        }
+    });
+</script>
+</body>
+</html>
