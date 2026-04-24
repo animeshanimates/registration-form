@@ -2,138 +2,139 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <title>CLEAR LAW | Author Registration</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600&display=swap');
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
 
-        /* --- DESIGN SYSTEM & VARIABLES --- */
+    <style>
+        /* ── DESIGN TOKENS ── */
         :root {
-            --bg: #000000;
-            --text-main: #FFFFFF;
-            --text-muted: rgba(255, 255, 255, 0.5);
-            --border-idle: rgba(255, 255, 255, 0.2);
-            --border-active: #FFFFFF;
-            --error: #ff4d4d;
-            --ease-fluid: cubic-bezier(0.16, 1, 0.3, 1);
-            --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.1);
-            --transition-fast: 0.3s var(--ease-fluid);
-            --transition-slow: 0.6s var(--ease-fluid);
+            --bg:           #000000;
+            --text-main:    #FFFFFF;
+            --text-muted:   rgba(255,255,255,0.5);
+            --text-subtle:  rgba(255,255,255,0.3);
+            --border-idle:  rgba(255,255,255,0.18);
+            --border-hover: rgba(255,255,255,0.4);
+            --border-focus: rgba(255,255,255,0.9);
+            --error:        #ff4d4d;
+            --ease-fluid:   cubic-bezier(0.16,1,0.3,1);
+            --ease-spring:  cubic-bezier(0.175,0.885,0.32,1.1);
+            --fast:  0.25s var(--ease-fluid);
+            --slow:  0.5s  var(--ease-fluid);
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
 
         body {
-            background-color: var(--bg);
+            background: var(--bg);
             color: var(--text-main);
             font-family: 'Montserrat', sans-serif;
-            line-height: 1.6;
             -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            padding: 60px 20px;
+            padding: 64px 20px 100px;
             opacity: 0;
-            animation: formReveal 1.2s var(--ease-fluid) forwards;
+            animation: reveal 1s var(--ease-fluid) forwards;
         }
 
-        /* --- PROGRESS BAR --- */
+        @keyframes reveal {
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ── PROGRESS BAR ── */
         #progress-bar {
             position: fixed;
             top: 0; left: 0;
             height: 2px;
-            background-color: var(--text-main);
+            background: #fff;
             width: 0%;
             z-index: 1000;
-            transition: width 0.5s var(--ease-fluid);
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            transition: width 0.4s var(--ease-fluid);
+            box-shadow: 0 0 10px rgba(255,255,255,0.4);
         }
 
-        /* --- TYPOGRAPHY --- */
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-        }
+        /* ── CONTAINER ── */
+        .container { max-width: 600px; margin: 0 auto; }
 
-        header {
-            margin-bottom: 50px;
+        /* ── HEADER ── */
+        header { margin-bottom: 56px; }
+
+        .brand {
+            font-weight: 200;
+            font-size: 11px;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 18px;
         }
 
         h1 {
             font-weight: 300;
-            font-size: 28px;
+            font-size: clamp(24px, 5vw, 30px);
             letter-spacing: 3px;
             text-transform: uppercase;
-            margin-bottom: 20px;
+            margin-bottom: 18px;
+            line-height: 1.2;
         }
 
-        h2 {
-            font-weight: 400;
-            font-size: 16px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: var(--text-muted);
-            margin: 50px 0 30px 0;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        h2::after {
-            content: '';
-            flex-grow: 1;
-            height: 1px;
-            background-color: var(--border-idle);
-        }
-
-        p {
+        header p {
             font-weight: 300;
             font-size: 13px;
             color: var(--text-muted);
-            margin-bottom: 20px;
+            line-height: 1.85;
         }
 
-        a {
+        header p a {
             color: var(--text-main);
             text-decoration: none;
             border-bottom: 1px solid var(--border-idle);
-            transition: border-color var(--transition-fast);
+            transition: border-color var(--fast);
         }
+        header p a:hover { border-color: var(--text-main); }
 
-        a:hover { border-bottom-color: var(--text-main); }
-
-        /* --- FLOATING LABEL INPUTS (The UI Upgrade) --- */
-        .form-group {
-            position: relative;
-            margin-bottom: 35px;
-            opacity: 1;
-            transform: translateY(0);
-            transition: opacity var(--transition-slow), transform var(--transition-slow);
+        /* ── SECTION HEADINGS ── */
+        h2 {
+            font-weight: 400;
+            font-size: 10px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin: 56px 0 32px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
         }
+        h2::after { content: ''; flex: 1; height: 1px; background: var(--border-idle); }
 
-        .form-group.hidden {
+        /* ── FORM GROUPS ── */
+        .form-group { margin-bottom: 36px; }
+
+        /* ── COLLAPSIBLE ── */
+        .collapsible {
+            max-height: 0;
+            overflow: hidden;
             opacity: 0;
-            transform: translateY(20px);
-            pointer-events: none;
-            position: absolute;
-            visibility: hidden;
+            transition: max-height 0.55s var(--ease-fluid), opacity 0.4s var(--ease-fluid);
         }
+        .collapsible.open { max-height: 900px; opacity: 1; }
 
-        .input-wrapper {
-            position: relative;
-            width: 100%;
-        }
+        /* ── FLOATING LABEL INPUTS ── */
+        .input-wrapper { position: relative; }
 
         .float-label {
             position: absolute;
-            left: 0;
-            top: 15px;
-            font-size: 14px;
+            left: 0; top: 16px;
+            font-size: 13px;
             font-weight: 400;
             color: var(--text-muted);
             pointer-events: none;
-            transition: all var(--transition-fast);
+            transition: all var(--fast);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
         }
 
-        /* Input styling */
         input[type="text"],
         input[type="email"],
         input[type="tel"],
@@ -144,46 +145,63 @@
             border: none;
             border-bottom: 1px solid var(--border-idle);
             color: var(--text-main);
-            font-family: inherit;
-            font-size: 15px;
-            padding: 15px 0 10px 0;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 16px; /* exactly 16px — prevents iOS auto-zoom */
+            font-weight: 300;
+            padding: 18px 0 10px;
             outline: none;
             border-radius: 0;
-            transition: border-color var(--transition-fast);
+            transition: border-color var(--fast);
+            caret-color: #fff;
         }
 
         textarea {
             resize: vertical;
-            min-height: 40px;
-            padding-top: 25px; /* Space for label */
+            min-height: 80px;
+            padding-top: 28px;
+            line-height: 1.7;
         }
 
-        /* The Magic: Floating the label when input has text or is focused */
+        input::placeholder, textarea::placeholder { color: transparent; }
+
         input:focus ~ .float-label,
         input:not(:placeholder-shown) ~ .float-label,
         textarea:focus ~ .float-label,
         textarea:not(:placeholder-shown) ~ .float-label {
-            top: -10px;
-            font-size: 10px;
-            color: var(--text-main);
-            letter-spacing: 1px;
+            top: -2px;
+            font-size: 9px;
+            font-weight: 500;
+            letter-spacing: 2px;
             text-transform: uppercase;
+            color: var(--text-main);
         }
 
-        input:focus, textarea:focus { border-bottom-color: var(--text-main); }
+        input:focus, textarea:focus { border-bottom-color: var(--border-focus); }
+        input:hover:not(:focus), textarea:hover:not(:focus) { border-bottom-color: var(--border-hover); }
 
-        /* Hide the actual placeholder text to let the label do the work */
-        input::placeholder, textarea::placeholder { color: transparent; }
-
-        /* --- SELECT DROPDOWNS --- */
+        /* ── SELECTS ── */
         .static-label {
             display: block;
-            font-size: 10px;
+            font-size: 9px;
             font-weight: 500;
-            margin-bottom: 8px;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
             text-transform: uppercase;
             color: var(--text-muted);
+            margin-bottom: 10px;
+        }
+
+        .select-wrap { position: relative; }
+        /* Custom chevron arrow */
+        .select-wrap::after {
+            content: '';
+            position: absolute;
+            right: 4px; top: 50%;
+            transform: translateY(-50%);
+            width: 0; height: 0;
+            border-left: 4px solid transparent;
+            border-right: 4px solid transparent;
+            border-top: 5px solid var(--text-muted);
+            pointer-events: none;
         }
 
         select {
@@ -192,156 +210,276 @@
             border: none;
             border-bottom: 1px solid var(--border-idle);
             color: var(--text-main);
-            font-family: inherit;
-            font-size: 14px;
-            padding: 10px 0;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 16px; /* exactly 16px — prevents iOS auto-zoom */
+            font-weight: 300;
+            padding: 16px 28px 16px 0; /* larger touch area */
             outline: none;
             cursor: pointer;
             appearance: none;
             -webkit-appearance: none;
-            background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23FFFFFF%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
-            background-repeat: no-repeat;
-            background-position: right 5px top 50%;
-            background-size: 10px auto;
-            transition: border-color var(--transition-fast);
+            transition: border-color var(--fast);
+            min-height: 48px;
         }
 
-        select:focus { border-bottom-color: var(--text-main); }
-        select option { background-color: var(--bg); color: var(--text-main); font-size: 14px; }
+        select:focus { border-bottom-color: var(--border-focus); }
+        select:hover:not(:focus) { border-bottom-color: var(--border-hover); }
+        select option { background: #111; color: #fff; }
         select:required:invalid { color: var(--text-muted); }
 
-        /* --- CHECKBOXES --- */
+        /* ── REQUIRED STAR ── */
+        .req { color: var(--text-main); margin-left: 2px; }
+
+        /* ── EDITORIAL NOTE ── */
+        .note {
+            font-size: 12px;
+            font-weight: 300;
+            color: var(--text-muted);
+            border-left: 1px solid var(--border-idle);
+            padding: 10px 16px;
+            margin-bottom: 28px;
+            line-height: 1.7;
+        }
+
+        /* ── CHECKBOX — Big Hit Thumb-Friendly Card ── */
         .checkbox-group {
             display: flex;
             align-items: flex-start;
-            gap: 15px;
-            margin-top: 20px;
+            margin-top: 10px;
+            position: relative;
         }
 
         .checkbox-group label {
             font-size: 13px;
             font-weight: 300;
             cursor: pointer;
-            line-height: 1.5;
+            line-height: 1.6;
             color: var(--text-muted);
-            transition: color var(--transition-fast);
+            transition: all var(--fast);
+            /* Large tap area with padding for the checkbox on the left */
+            padding: 16px 16px 16px 50px;
+            border-radius: 6px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border-idle);
+            width: 100%;
         }
 
-        .checkbox-group label:hover { color: var(--text-main); }
+        .checkbox-group label:active {
+            background: rgba(255,255,255,0.07);
+        }
 
         input[type="checkbox"] {
+            position: absolute;
+            left: 16px;
+            top: 19px; /* align with first line of text */
             appearance: none;
-            min-width: 18px;
-            height: 18px;
+            -webkit-appearance: none;
+            min-width: 20px;
+            height: 20px;
             border: 1px solid var(--border-idle);
-            border-radius: 2px;
-            margin-top: 2px;
+            border-radius: 3px;
             outline: none;
-            cursor: pointer;
-            position: relative;
-            transition: all var(--transition-fast);
+            background: transparent;
+            transition: border-color var(--fast);
+            pointer-events: none; /* label handles the tap */
+            flex-shrink: 0;
         }
 
-        input[type="checkbox"]:checked {
+        /* Light up entire card when checked */
+        input[type="checkbox"]:checked ~ label,
+        input[type="checkbox"]:checked + label {
             border-color: var(--text-main);
+            color: var(--text-main);
+            background: rgba(255,255,255,0.07);
         }
+
+        input[type="checkbox"]:checked { border-color: var(--text-main); }
 
         input[type="checkbox"]:checked::after {
             content: '';
             position: absolute;
-            left: 5px; top: 1px;
-            width: 5px; height: 10px;
-            border: solid var(--text-main);
-            border-width: 0 2px 2px 0;
+            left: 7px; top: 3px;
+            width: 5px; height: 11px;
+            border: solid #fff;
+            border-width: 0 1.5px 1.5px 0;
             transform: rotate(45deg);
-            animation: drawCheck 0.3s var(--ease-spring) forwards;
+            animation: drawCheck 0.25s var(--ease-spring) forwards;
         }
 
         @keyframes drawCheck {
-            0% { width: 0; height: 0; opacity: 0; }
-            100% { width: 5px; height: 10px; opacity: 1; }
+            from { height: 0; opacity: 0; }
+            to   { height: 11px; opacity: 1; }
         }
 
-        /* --- SUBMIT BUTTON --- */
-        .btn-wrapper { margin-top: 60px; }
+        /* ── SUBMIT BUTTON ── */
+        .btn-wrap {
+            margin-top: 56px;
+            padding-bottom: 40px;
+        }
 
         button[type="submit"] {
             width: 100%;
-            background-color: var(--text-main);
+            background: var(--text-main);
             color: var(--bg);
             border: none;
             padding: 20px;
             font-family: 'Montserrat', sans-serif;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 3px;
+            letter-spacing: 4px;
             cursor: pointer;
             position: relative;
             overflow: hidden;
-            transition: transform 0.2s var(--ease-fluid);
+            transition: transform 0.2s var(--ease-fluid), opacity var(--fast);
+            min-height: 60px;
         }
 
-        button[type="submit"]:hover { transform: translateY(-2px); }
-        button[type="submit"]:active { transform: translateY(1px); }
-
-        /* The liquid hover fill effect */
         button[type="submit"]::after {
             content: '';
             position: absolute;
             top: 100%; left: 0;
             width: 100%; height: 100%;
-            background-color: rgba(0, 0, 0, 0.1);
+            background: rgba(0,0,0,0.1);
             transition: top 0.4s var(--ease-fluid);
         }
-
+        button[type="submit"]:hover { transform: translateY(-2px); }
         button[type="submit"]:hover::after { top: 0; }
-
+        button[type="submit"]:active { transform: translateY(1px); }
         button[type="submit"]:disabled {
-            background-color: var(--border-idle);
-            color: var(--text-muted);
+            opacity: 0.35;
             cursor: not-allowed;
             transform: none;
+            pointer-events: none;
         }
 
-        /* --- REQUIRED INDICATOR --- */
-        .req { color: var(--text-main); margin-left: 2px; }
-
-        /* --- ANIMATIONS --- */
-        @keyframes formReveal {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* ── DRAFT RESTORED BANNER ── */
+        #draft-banner {
+            display: none;
+            font-size: 11px;
+            font-weight: 400;
+            color: var(--text-muted);
+            border: 1px solid var(--border-idle);
+            padding: 10px 16px;
+            margin-bottom: 36px;
+            letter-spacing: 0.5px;
+            line-height: 1.6;
         }
-
-        .fade-in { animation: fadeIn 0.6s var(--ease-fluid) forwards; }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* System Notification */
-        .notification {
-            position: fixed;
-            bottom: 30px; left: 50%;
-            transform: translateX(-50%) translateY(50px);
-            background: var(--text-main);
-            color: var(--bg);
-            padding: 15px 30px;
-            font-size: 12px;
-            font-weight: 600;
+        #draft-banner.show { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+        #draft-clear {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 10px;
+            font-weight: 500;
             letter-spacing: 1px;
             text-transform: uppercase;
+            cursor: pointer;
+            padding: 4px 0;
+            white-space: nowrap;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            transition: color var(--fast);
+            flex-shrink: 0;
+        }
+        #draft-clear:hover { color: var(--text-main); }
+
+        /* ── TOAST ── */
+        .toast {
+            position: fixed;
+            bottom: 28px; left: 50%;
+            transform: translateX(-50%) translateY(60px);
+            background: #fff;
+            color: #000;
+            padding: 14px 28px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
             opacity: 0;
-            transition: all var(--transition-slow);
+            transition: all 0.5s var(--ease-fluid);
             pointer-events: none;
-            z-index: 2000;
+            z-index: 9000;
+            white-space: nowrap;
         }
+        .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+        .toast.error { background: var(--error); color: #fff; }
 
-        .notification.show {
-            transform: translateX(-50%) translateY(0);
-            opacity: 1;
+        /* ── SUCCESS SCREEN ── */
+        #successScreen {
+            display: none;
+            text-align: center;
+            padding: 80px 20px;
+            animation: reveal 0.7s var(--ease-fluid) forwards;
         }
+        #successScreen.show { display: block; }
+        #successScreen h2 {
+            font-weight: 200;
+            font-size: 28px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+            color: var(--text-main);
+            display: block;
+        }
+        #successScreen h2::after { display: none; }
+        #successScreen p {
+            font-weight: 300;
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.9;
+        }
+        .check-circle {
+            width: 56px; height: 56px;
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 32px;
+        }
+        .check-circle svg { stroke: #fff; }
 
+        /* ══════════════════════════════════════════
+           MOBILE OVERRIDES
+        ══════════════════════════════════════════ */
+        @media (max-width: 600px) {
+            body { padding: 40px 18px 160px; } /* extra bottom for sticky btn */
+            h1   { font-size: 24px; letter-spacing: 2px; }
+            h2   { margin: 44px 0 24px; }
+            .form-group { margin-bottom: 30px; }
+
+            /* Toast — full width */
+            .toast {
+                left: 16px; right: 16px; bottom: 16px;
+                transform: translateY(60px);
+                white-space: normal;
+                text-align: center;
+            }
+            .toast.show { transform: translateY(0); }
+
+            /* Sticky submit button in thumb zone */
+            .btn-wrap {
+                position: fixed;
+                bottom: 0; left: 0;
+                width: 100%;
+                padding: 16px 16px 36px; /* 36px for iOS home bar */
+                background: linear-gradient(to top, #000 65%, transparent);
+                margin-top: 0;
+                z-index: 500;
+                transform: translateY(150%);
+                transition: transform 0.45s var(--ease-spring);
+            }
+
+            .btn-wrap.show-sticky { transform: translateY(0); }
+
+            /* Slightly rounded for native app feel */
+            button[type="submit"] { border-radius: 10px; }
+
+            /* Form padding so last field isn't hidden behind sticky btn */
+            form { padding-bottom: 100px; }
+        }
     </style>
 </head>
 <body>
@@ -349,45 +487,63 @@
 <div id="progress-bar"></div>
 
 <div class="container">
+
     <header>
+        <p class="brand">Clearlaw</p>
         <h1>Author Registration</h1>
-        <p>Thank you for your interest in getting your writing published on CLEARLAW. Kindly review the <a href="#" target="_blank">Author's Agreement</a> & <a href="#" target="_blank">Submission Guidelines</a>. Registration leads to automated subscription to clearlaw.online.</p>
+        <p>
+            Thank you for your interest in getting your writing published on CLEARLAW.
+            Kindly review the <a href="#" target="_blank">Author's Agreement</a> &amp;
+            <a href="#" target="_blank">Submission Guidelines</a>.
+            Registration leads to automated subscription to clearlaw.online.
+        </p>
     </header>
 
-    <form id="registrationForm">
-        
-        <div id="section-1">
-            <div class="form-group">
-                <div class="input-wrapper">
-                    <input type="email" id="email" name="email" placeholder=" " required class="track-progress">
-                    <label class="float-label" for="email">Email <span class="req">*</span></label>
-                </div>
-            </div>
+    <!-- Draft restored banner -->
+    <div id="draft-banner">
+        <span>Your previous progress has been restored.</span>
+        <button id="draft-clear" type="button">Clear draft</button>
+    </div>
 
-            <div class="form-group">
-                <div class="input-wrapper">
-                    <input type="text" id="author_name" name="author_name" placeholder=" " required class="track-progress">
-                    <label class="float-label" for="author_name">Author's Name (First and Last) <span class="req">*</span></label>
-                </div>
-            </div>
+    <form id="registrationForm" novalidate>
 
-            <div class="form-group">
-                <div class="input-wrapper">
-                    <input type="tel" id="phone" name="phone" placeholder=" " required class="track-progress">
-                    <label class="float-label" for="phone">Phone Number <span class="req">*</span></label>
-                </div>
+        <!-- ── SECTION 1 ── -->
+        <div class="form-group">
+            <div class="input-wrapper">
+                <input type="email" id="email" name="email" placeholder=" "
+                       required inputmode="email" autocomplete="email">
+                <label class="float-label" for="email">Email <span class="req">*</span></label>
             </div>
+        </div>
 
-            <div class="form-group">
-                <div class="input-wrapper">
-                    <input type="url" id="linkedin" name="linkedin" placeholder=" ">
-                    <label class="float-label" for="linkedin">LinkedIn Profile URL (Optional)</label>
-                </div>
+        <div class="form-group">
+            <div class="input-wrapper">
+                <input type="text" id="author_name" name="author_name" placeholder=" "
+                       required autocomplete="name" autocapitalize="words">
+                <label class="float-label" for="author_name">Author's Name (First and Last) <span class="req">*</span></label>
             </div>
+        </div>
 
-            <div class="form-group">
-                <label class="static-label" for="status">Current Academic/Professional Status <span class="req">*</span></label>
-                <select id="status" name="status" required class="track-progress">
+        <div class="form-group">
+            <div class="input-wrapper">
+                <input type="tel" id="phone" name="phone" placeholder=" "
+                       required inputmode="tel" autocomplete="tel">
+                <label class="float-label" for="phone">Phone Number <span class="req">*</span></label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="input-wrapper">
+                <input type="url" id="linkedin" name="linkedin" placeholder=" "
+                       autocomplete="url" inputmode="url">
+                <label class="float-label" for="linkedin">LinkedIn Profile URL (Optional)</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="static-label" for="status">Current Academic / Professional Status <span class="req">*</span></label>
+            <div class="select-wrap">
+                <select id="status" name="status" required>
                     <option value="" disabled selected>Select your status</option>
                     <option value="Law Student">Law Student</option>
                     <option value="Advocate / Lawyer">Advocate / Lawyer</option>
@@ -396,290 +552,454 @@
                     <option value="Other">Other</option>
                 </select>
             </div>
-
-            <div class="form-group">
-                <div class="input-wrapper">
-                    <input type="text" id="court" name="court" placeholder=" ">
-                    <label class="float-label" for="court">If Advocate, Which Court Do You Practice In?</label>
-                </div>
-            </div>
         </div>
 
-        <h2>Writing Preferences</h2>
-        
         <div class="form-group">
-            <label class="static-label" for="domain">Please select the legal domain you wish to write in <span class="req">*</span></label>
-            <select id="domain" name="domain" required class="track-progress">
-                <option value="" disabled selected>Select ONE domain</option>
-                <option value="contract_law">Indian Contract Law (ICA, 1872)</option>
-                <option value="const_law">Constitutional & Administrative Law</option>
-                <option value="criminal_law">Criminal Law (BNS, BNSS & BSA)</option>
-                <option value="cpc_law">Civil Procedure Code (CPC, 1908)</option>
-                <option value="property_law">Property Law (TPA, 1882)</option>
-                <option value="bsa_law">Bharatiya Sakshya Adhinam (2023)</option>
-                <option value="limitation_act">Limitation Act, 1963</option>
-                <option value="consumer_law">Consumer Protection Law</option>
-                <option value="family_law">Family Law</option>
-                <option value="company_law">Company Law & Corporate Governance</option>
-                <option value="ipr_law">Intellectual Property Rights (IPR)</option>
-                <option value="cyber_law">Cyber Law & Technology Law</option>
-                <option value="general_law">General Legal Awareness</option>
-                <option value="commercial_practice">Commercial & Corporate Practice</option>
-                <option value="specialized_litigation">Specialized Litigation Areas</option>
-                <option value="emerging_areas">Emerging & High-Growth Areas</option>
-                <option value="other_topic">Other (Custom Topic)</option>
-            </select>
+            <div class="input-wrapper">
+                <input type="text" id="court" name="court" placeholder=" " autocapitalize="words">
+                <label class="float-label" for="court">If Advocate — Court of Practice (Optional)</label>
+            </div>
         </div>
 
-        <div id="dynamic_topic_wrapper" class="form-group hidden">
-            <label class="static-label" id="dynamic_topic_label" for="selected_topic">Select ONE topic <span class="req">*</span></label>
-            <select id="selected_topic" name="selected_topic" class="dynamic-req track-progress">
+        <!-- ── SECTION 2 ── -->
+        <h2>Writing Preferences</h2>
+
+        <div class="form-group">
+            <label class="static-label" for="domain">Legal Domain <span class="req">*</span></label>
+            <div class="select-wrap">
+                <select id="domain" name="domain" required>
+                    <option value="" disabled selected>Select ONE domain</option>
+                    <option value="contract_law">Indian Contract Law (ICA, 1872)</option>
+                    <option value="const_law">Constitutional &amp; Administrative Law</option>
+                    <option value="criminal_law">Criminal Law (BNS, BNSS &amp; BSA)</option>
+                    <option value="cpc_law">Civil Procedure Code (CPC, 1908)</option>
+                    <option value="property_law">Property Law (TPA, 1882)</option>
+                    <option value="bsa_law">Bharatiya Sakshya Adhinam (2023)</option>
+                    <option value="limitation_act">Limitation Act, 1963</option>
+                    <option value="consumer_law">Consumer Protection Law</option>
+                    <option value="family_law">Family Law</option>
+                    <option value="company_law">Company Law &amp; Corporate Governance</option>
+                    <option value="ipr_law">Intellectual Property Rights (IPR)</option>
+                    <option value="cyber_law">Cyber Law &amp; Technology Law</option>
+                    <option value="general_law">General Legal Awareness</option>
+                    <option value="commercial_practice">Commercial &amp; Corporate Practice</option>
+                    <option value="specialized_litigation">Specialized Litigation Areas</option>
+                    <option value="emerging_areas">Emerging &amp; High-Growth Areas</option>
+                    <option value="other_domain">Other (Custom Domain)</option>
                 </select>
-        </div>
-
-        <div id="custom_topic_wrapper" class="hidden">
-            <p>Topics submitted under "Other" are subject to editorial approval. Submission does not guarantee acceptance.</p>
-            
-            <div class="form-group">
-                <div class="input-wrapper">
-                    <input type="text" id="custom_proposed" name="custom_proposed" placeholder=" " class="dynamic-req track-progress">
-                    <label class="float-label" for="custom_proposed">Proposed Topic Title <span class="req">*</span></label>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="input-wrapper">
-                    <textarea id="custom_scope" name="custom_scope" placeholder=" " class="dynamic-req track-progress"></textarea>
-                    <label class="float-label" for="custom_scope">Brief scope of topic (2 to 3 lines) <span class="req">*</span></label>
-                </div>
             </div>
         </div>
 
-        <div id="declaration_section" class="hidden">
+        <!-- Topic dropdown (for known domains) -->
+        <div class="collapsible" id="topic_section">
+            <div class="form-group">
+                <label class="static-label" id="topic_label" for="selected_topic">Specific Topic <span class="req">*</span></label>
+                <div class="select-wrap">
+                    <select id="selected_topic" name="selected_topic">
+                        <!-- populated by JS -->
+                    </select>
+                </div>
+            </div>
+
+            <!-- Revealed when user picks "Other (Custom Topic)" -->
+            <div class="collapsible" id="custom_topic_inline">
+                <div class="form-group">
+                    <div class="input-wrapper">
+                        <input type="text" id="custom_topic_title" name="custom_topic_title"
+                               placeholder=" " autocapitalize="words">
+                        <label class="float-label" for="custom_topic_title">Your Topic Title <span class="req">*</span></label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-wrapper">
+                        <input type="text" id="custom_subtopic" name="custom_subtopic"
+                               placeholder=" " autocapitalize="words">
+                        <label class="float-label" for="custom_subtopic">Your Sub-topic / Specific Angle <span class="req">*</span></label>
+                    </div>
+                </div>
+                <div class="note">Custom topics are subject to editorial review. Submission does not guarantee acceptance.</div>
+            </div>
+        </div>
+
+        <!-- Custom domain fields -->
+        <div class="collapsible" id="custom_domain_section">
+            <div class="form-group">
+                <div class="input-wrapper">
+                    <input type="text" id="custom_domain_name" name="custom_domain_name"
+                           placeholder=" " autocapitalize="words">
+                    <label class="float-label" for="custom_domain_name">Your Domain / Area of Law <span class="req">*</span></label>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-wrapper">
+                    <input type="text" id="custom_domain_topic" name="custom_domain_topic"
+                           placeholder=" " autocapitalize="words">
+                    <label class="float-label" for="custom_domain_topic">Your Topic Title <span class="req">*</span></label>
+                </div>
+            </div>
+            <div class="note">Custom domains &amp; topics are subject to editorial review. Submission does not guarantee acceptance.</div>
+        </div>
+
+        <!-- ── SECTION 3: Declaration ── -->
+        <div class="collapsible" id="declaration_section">
+
             <h2>Author's Declaration</h2>
-            
+
             <div class="form-group">
-                <label class="static-label" for="timeline">When can you submit your article? <span class="req">*</span></label>
-                <select id="timeline" name="timeline" required class="track-progress">
-                    <option value="" disabled selected>Select timeline</option>
-                    <option value="Within 3 Days">Within 3 Days</option>
-                    <option value="Within 1 Week">Within 1 Week</option>
-                    <option value="Within 2 Weeks">Within 2 Weeks</option>
-                    <option value="More than 2 Weeks">More than 2 Weeks</option>
-                </select>
+                <label class="static-label" for="timeline">Submission Timeline <span class="req">*</span></label>
+                <div class="select-wrap">
+                    <select id="timeline" name="timeline" required>
+                        <option value="" disabled selected>When can you submit your article?</option>
+                        <option value="Within 3 Days">Within 3 Days</option>
+                        <option value="Within 1 Week">Within 1 Week</option>
+                        <option value="Within 2 Weeks">Within 2 Weeks</option>
+                    </select>
+                </div>
             </div>
 
             <div class="checkbox-group">
-                <input type="checkbox" id="agreement" name="agreement_confirmation" required class="track-progress">
-                <label for="agreement">I confirm that I have read, understood, and unconditionally agree to be bound by the Author's Agreement & Submission Guidelines of CLEARLAW.</label>
+                <input type="checkbox" id="agreement" name="agreement_confirmation" required>
+                <label for="agreement">
+                    I confirm that I have read, understood, and unconditionally agree to be bound by
+                    the Author's Agreement &amp; Submission Guidelines of CLEARLAW.
+                </label>
             </div>
 
-            <div class="btn-wrapper">
+            <div class="btn-wrap" id="btnWrap">
                 <button type="submit" id="submitBtn">Submit Registration</button>
             </div>
-        </div>
-        
-    </form>
-</div>
 
-<div id="sysNotification" class="notification">Message</div>
+        </div>
+
+    </form>
+
+    <!-- Success screen -->
+    <div id="successScreen">
+        <div class="check-circle">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="1.5"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <h2>Registered.</h2>
+        <p>Thank you for joining CLEARLAW.<br>Our editorial team will be in touch shortly.</p>
+    </div>
+
+</div><!-- /container -->
+
+<div id="toast" class="toast" role="alert" aria-live="polite">Message</div>
 
 <script>
-    // --- APP SCRIPT URL ---
-    const GOOGLE_SCRIPT_WEB_APP_URL = "https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec";
+(function () {
+    'use strict';
 
-    // --- DOMAIN DATA MAP ---
-    // Simulating the 20-section logic effortlessly
-    const topicData = {
-        "contract_law": ["Formation & Validity", "Breach & Damages", "Specific Relief Act", "E-Contracts", "Indemnity & Guarantee"],
-        "const_law": ["Fundamental Rights", "Writ Jurisdiction", "Basic Structure Doctrine", "Administrative Actions", "Federalism"],
-        "criminal_law": ["BNS: New Offenses", "BNSS: Procedural Changes", "White Collar Crimes", "Cyber Crimes under BNS", "Bail Jurisprudence"],
-        "cpc_law": ["Res Judicata", "Injunctions", "Execution of Decrees", "Appeals & Revisions", "Alternative Dispute Resolution"],
-        "property_law": ["Sale & Lease", "Mortgages", "Easement Rights", "Benami Transactions", "RERA Act implications"],
-        "bsa_law": ["Electronic Evidence", "Burden of Proof", "Admissibility of Digital Records", "Expert Opinions", "Confessions"],
-        "limitation_act": ["Condonation of Delay", "Adverse Possession", "Acknowledgment of Debt", "Starting point of limitation"],
-        "consumer_law": ["E-Commerce Rules", "Product Liability", "Medical Negligence", "Deficiency in Service", "Misleading Ads"],
-        "family_law": ["Divorce & Alimony", "Child Custody", "Uniform Civil Code debates", "Maintenance Laws", "Succession & Inheritance"],
-        "company_law": ["Corporate Governance", "Mergers & Acquisitions", "Insolvency & Bankruptcy Code", "Directors Duties", "CSR Regulations"],
-        "ipr_law": ["Trademark Infringement", "Patent Filing Strategies", "Copyright in AI era", "Trade Secrets", "Geographical Indications"],
-        "cyber_law": ["Data Protection (DPDP Act)", "AI & Law", "Cyber Torts", "Cryptocurrency Regulations", "Intermediary Liability"],
-        "general_law": ["Right to Information (RTI)", "Environmental Law", "Labor Codes", "Human Rights", "Public Interest Litigation"],
-        "commercial_practice": ["Arbitration Agreements", "Foreign Direct Investment", "Banking Regulations", "Taxation Laws", "Securities Law (SEBI)"],
-        "specialized_litigation": ["Armed Forces Tribunal", "Green Tribunal (NGT)", "Prevention of Money Laundering Act (PMLA)", "Competition Law (CCI)"],
-        "emerging_areas": ["Space Law", "Sports Law", "Aviation Law", "Gaming & E-Sports Regulations", "Climate Change Litigation"]
+    /* ── CONFIG ── */
+    const SCRIPT_URL = 'https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec';
+    const DRAFT_KEY  = 'clearLawDraft';
+
+    /* ── TOPIC DATA ── */
+    const TOPICS = {
+        contract_law:           ['Formation & Validity','Breach & Damages','Specific Relief Act','E-Contracts','Indemnity & Guarantee','Other (Custom Topic)'],
+        const_law:              ['Fundamental Rights','Writ Jurisdiction','Basic Structure Doctrine','Administrative Actions','Federalism','Other (Custom Topic)'],
+        criminal_law:           ['BNS: New Offences','BNSS: Procedural Changes','White Collar Crimes','Cyber Crimes under BNS','Bail Jurisprudence','Other (Custom Topic)'],
+        cpc_law:                ['Res Judicata','Injunctions','Execution of Decrees','Appeals & Revisions','Alternative Dispute Resolution','Other (Custom Topic)'],
+        property_law:           ['Sale & Lease','Mortgages','Easement Rights','Benami Transactions','RERA Act Implications','Other (Custom Topic)'],
+        bsa_law:                ['Electronic Evidence','Burden of Proof','Admissibility of Digital Records','Expert Opinions','Confessions','Other (Custom Topic)'],
+        limitation_act:         ['Condonation of Delay','Adverse Possession','Acknowledgment of Debt','Starting Point of Limitation','Other (Custom Topic)'],
+        consumer_law:           ['E-Commerce Rules','Product Liability','Medical Negligence','Deficiency in Service','Misleading Advertisements','Other (Custom Topic)'],
+        family_law:             ['Divorce & Alimony','Child Custody','Uniform Civil Code Debates','Maintenance Laws','Succession & Inheritance','Other (Custom Topic)'],
+        company_law:            ["Corporate Governance","Mergers & Acquisitions","Insolvency & Bankruptcy Code","Directors' Duties","CSR Regulations","Other (Custom Topic)"],
+        ipr_law:                ['Trademark Infringement','Patent Filing Strategies','Copyright in the AI Era','Trade Secrets','Geographical Indications','Other (Custom Topic)'],
+        cyber_law:              ['Data Protection (DPDP Act)','AI & Law','Cyber Torts','Cryptocurrency Regulations','Intermediary Liability','Other (Custom Topic)'],
+        general_law:            ['Right to Information (RTI)','Environmental Law','Labour Codes','Human Rights','Public Interest Litigation','Other (Custom Topic)'],
+        commercial_practice:    ['Arbitration Agreements','Foreign Direct Investment','Banking Regulations','Taxation Laws','Securities Law (SEBI)','Other (Custom Topic)'],
+        specialized_litigation: ['Armed Forces Tribunal','Green Tribunal (NGT)','PMLA','Competition Law (CCI)','Other (Custom Topic)'],
+        emerging_areas:         ['Space Law','Sports Law','Aviation Law','Gaming & E-Sports Regulations','Climate Change Litigation','Other (Custom Topic)']
     };
 
-    // --- DOM ELEMENTS ---
-    const form = document.getElementById('registrationForm');
-    const domainSelect = document.getElementById('domain');
-    
-    const dynamicWrapper = document.getElementById('dynamic_topic_wrapper');
-    const topicSelect = document.getElementById('selected_topic');
-    const topicLabel = document.getElementById('dynamic_topic_label');
-    
-    const customWrapper = document.getElementById('custom_topic_wrapper');
-    const customReqs = customWrapper.querySelectorAll('.dynamic-req');
-    
-    const declarationSection = document.getElementById('declaration_section');
-    const progressBar = document.getElementById('progress-bar');
-    const inputsForProgress = document.querySelectorAll('.track-progress');
-    const notification = document.getElementById('sysNotification');
-    const submitBtn = document.getElementById('submitBtn');
+    /* ── DOM REFS ── */
+    const form              = document.getElementById('registrationForm');
+    const successScreen     = document.getElementById('successScreen');
+    const progressBar       = document.getElementById('progress-bar');
+    const domainSel         = document.getElementById('domain');
+    const topicSection      = document.getElementById('topic_section');
+    const topicSel          = document.getElementById('selected_topic');
+    const topicLabel        = document.getElementById('topic_label');
+    const customTopicInline = document.getElementById('custom_topic_inline');
+    const customDomSect     = document.getElementById('custom_domain_section');
+    const declarationSect   = document.getElementById('declaration_section');
+    const btnWrap           = document.getElementById('btnWrap');
+    const submitBtn         = document.getElementById('submitBtn');
+    const toast             = document.getElementById('toast');
+    const draftBanner       = document.getElementById('draft-banner');
+    const draftClear        = document.getElementById('draft-clear');
+    const nameInput         = document.getElementById('author_name');
+    const phoneInput        = document.getElementById('phone');
 
-    // --- LOGIC: Auto Scroll Helper ---
-    function smoothScrollTo(element) {
-        setTimeout(() => {
-            element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }, 150); // slight delay allowing DOM to paint
+    const F = {
+        topicSel:     [topicSel],
+        customTopic:  [document.getElementById('custom_topic_title'), document.getElementById('custom_subtopic')],
+        customDomain: [document.getElementById('custom_domain_name'), document.getElementById('custom_domain_topic')],
+        declaration:  [document.getElementById('timeline'), document.getElementById('agreement')]
+    };
+
+    /* ── OPEN / CLOSE COLLAPSIBLES ── */
+    function open(el, fields) {
+        el.classList.add('open');
+        if (fields) fields.forEach(f => f.setAttribute('required', ''));
+        setTimeout(updateProgress, 60);
     }
 
-    // --- LOGIC: Progress Bar Calculation ---
+    function close(el, fields) {
+        el.classList.remove('open');
+        if (fields) fields.forEach(f => {
+            f.removeAttribute('required');
+            if (f.tagName === 'SELECT') f.selectedIndex = 0;
+            else f.value = '';
+        });
+        setTimeout(updateProgress, 60);
+    }
+
+    /* ── VISIBILITY CHECK (for progress bar & validation) ── */
+    function isVisible(el) {
+        let node = el.parentElement;
+        while (node && node !== form) {
+            if (node.classList.contains('collapsible') && !node.classList.contains('open')) return false;
+            node = node.parentElement;
+        }
+        return true;
+    }
+
+    /* ── PROGRESS BAR ── */
     function updateProgress() {
-        // Count total visible required fields
-        const visibleFields = Array.from(inputsForProgress).filter(el => {
-            // Check if element or its parent wrapper is hidden
-            if (el.closest('.hidden')) return false;
-            return el.hasAttribute('required');
-        });
-
-        const totalRequired = visibleFields.length;
-        let filledRequired = 0;
-
-        visibleFields.forEach(el => {
-            if (el.type === 'checkbox') {
-                if (el.checked) filledRequired++;
-            } else if (el.value.trim() !== '') {
-                filledRequired++;
-            }
-        });
-
-        const percentage = totalRequired === 0 ? 0 : (filledRequired / totalRequired) * 100;
-        progressBar.style.width = `${percentage}%`;
+        const required = Array.from(form.querySelectorAll('[required]')).filter(isVisible);
+        const total    = required.length;
+        const filled   = required.filter(f => f.type === 'checkbox' ? f.checked : f.value.trim() !== '').length;
+        progressBar.style.width = total ? `${(filled / total) * 100}%` : '0%';
     }
 
-    // Attach listeners for live progress tracking
-    inputsForProgress.forEach(input => {
-        input.addEventListener('input', updateProgress);
-        input.addEventListener('change', updateProgress);
-    });
+    form.addEventListener('input',  updateProgress);
+    form.addEventListener('change', updateProgress);
 
-    // --- LOGIC: Dynamic Domain Handling ---
-    domainSelect.addEventListener('change', function() {
-        const selectedValue = this.value;
-        const selectedText = this.options[this.selectedIndex].text;
+    /* ── SCROLL HELPER ── */
+    function scrollTo(el) {
+        setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 230);
+    }
 
-        // Reset Custom
-        customWrapper.classList.add('hidden');
-        customWrapper.style.position = "absolute";
-        customReqs.forEach(input => {
-            input.removeAttribute('required');
-            input.value = '';
-        });
+    /* ══════════════════════════════════════════
+       UPGRADE 1: AUTO-SAVE TO LOCALSTORAGE
+    ══════════════════════════════════════════ */
+    function saveDraft() {
+        try {
+            const data = {};
+            new FormData(form).forEach((v, k) => data[k] = v);
+            // Also capture checkbox state (FormData omits unchecked)
+            const cb = document.getElementById('agreement');
+            data['agreement_confirmation'] = cb.checked ? 'on' : '';
+            localStorage.setItem(DRAFT_KEY, JSON.stringify(data));
+        } catch(e) {}
+    }
 
-        // Reset Dynamic Dropdown
-        dynamicWrapper.classList.add('hidden');
-        dynamicWrapper.style.position = "absolute";
-        topicSelect.removeAttribute('required');
-        topicSelect.innerHTML = '';
+    form.addEventListener('input',  saveDraft);
+    form.addEventListener('change', saveDraft);
 
-        if (selectedValue === 'other_topic') {
-            // Un-hide Custom Inputs
-            customWrapper.classList.remove('hidden');
-            customWrapper.style.position = "relative";
-            customReqs.forEach(input => input.setAttribute('required', 'true'));
-            
-            smoothScrollTo(customWrapper);
+    function restoreDraft() {
+        try {
+            const saved = localStorage.getItem(DRAFT_KEY);
+            if (!saved) return;
+            const data = JSON.parse(saved);
 
-        } else if (topicData[selectedValue]) {
-            // Build Dynamic Dropdown
-            topicLabel.innerHTML = `Select ONE topic from ${selectedText} <span class="req">*</span>`;
-            
-            let defaultOption = document.createElement('option');
-            defaultOption.value = "";
-            defaultOption.text = "Select a specific topic";
-            defaultOption.disabled = true;
-            defaultOption.selected = true;
-            topicSelect.appendChild(defaultOption);
-
-            topicData[selectedValue].forEach(topic => {
-                let opt = document.createElement('option');
-                opt.value = topic;
-                opt.text = topic;
-                topicSelect.appendChild(opt);
+            // Restore simple fields first
+            Object.keys(data).forEach(key => {
+                const el = form.elements[key];
+                if (!el) return;
+                if (el.type === 'checkbox') {
+                    el.checked = data[key] === 'on';
+                } else {
+                    el.value = data[key];
+                }
             });
 
-            dynamicWrapper.classList.remove('hidden');
-            dynamicWrapper.style.position = "relative";
-            topicSelect.setAttribute('required', 'true');
-            
-            smoothScrollTo(dynamicWrapper);
-        }
+            // Trigger domain logic to reopen correct sections
+            if (data.domain) {
+                domainSel.value = data.domain;
+                domainSel.dispatchEvent(new Event('change'));
 
-        // Reveal Declaration section if not already shown
-        if (declarationSection.classList.contains('hidden')) {
-            declarationSection.classList.remove('hidden');
-            declarationSection.classList.add('fade-in');
-        }
+                // Restore topic after sections animate open
+                setTimeout(() => {
+                    if (data.selected_topic) {
+                        topicSel.value = data.selected_topic;
+                        topicSel.dispatchEvent(new Event('change'));
+                    }
+                    updateProgress();
+                }, 120);
+            }
 
-        // Recalculate progress bar max value based on new visible required fields
-        updateProgress(); 
-    });
-
-    // --- LOGIC: Form Submission Processing ---
-    function showNotification(message, isError = false) {
-        notification.innerText = message;
-        notification.style.backgroundColor = isError ? "var(--error)" : "var(--text-main)";
-        notification.style.color = isError ? "var(--text-main)" : "var(--bg)";
-        notification.classList.add('show');
-        
-        setTimeout(() => {
-            notification.classList.remove('show');
-        }, 4000);
+            draftBanner.classList.add('show');
+            updateProgress();
+        } catch(e) {}
     }
 
-    form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        
-        submitBtn.disabled = true;
-        submitBtn.innerText = 'Processing...';
+    draftClear.addEventListener('click', () => {
+        localStorage.removeItem(DRAFT_KEY);
+        form.reset();
+        close(topicSection,      F.topicSel);
+        close(customTopicInline, F.customTopic);
+        close(customDomSect,     F.customDomain);
+        close(declarationSect,   F.declaration);
+        topicSel.innerHTML = '';
+        btnWrap.classList.remove('show-sticky');
+        draftBanner.classList.remove('show');
+        updateProgress();
+    });
 
-        const formData = new FormData(form);
+    /* ══════════════════════════════════════════
+       UPGRADE 2: SMART INPUT MASKING
+    ══════════════════════════════════════════ */
+
+    // Auto-Title Case for name
+    nameInput.addEventListener('input', function () {
+        const pos = this.selectionStart;
+        this.value = this.value.replace(/\b\w/g, c => c.toUpperCase());
+        this.setSelectionRange(pos, pos);
+    });
+
+    // Strip non-phone characters (allow digits, +, -, spaces)
+    phoneInput.addEventListener('input', function () {
+        const pos = this.selectionStart;
+        const cleaned = this.value.replace(/[^\d+\-\s]/g, '');
+        if (cleaned !== this.value) {
+            this.value = cleaned;
+            this.setSelectionRange(pos - 1, pos - 1);
+        }
+    });
+
+    /* ══════════════════════════════════════════
+       UPGRADE 3: ENTER KEY ADVANCES TO NEXT FIELD
+    ══════════════════════════════════════════ */
+    form.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' && e.target.tagName === 'INPUT') {
+            e.preventDefault();
+            const focusable = Array.from(
+                form.querySelectorAll('input, select, textarea, button[type="submit"]')
+            ).filter(el => isVisible(el) && !el.disabled);
+
+            const idx = focusable.indexOf(e.target);
+            if (idx > -1 && idx < focusable.length - 1) {
+                const next = focusable[idx + 1];
+                next.focus();
+                // Scroll so it's not hidden under the virtual keyboard
+                setTimeout(() => {
+                    const y = next.getBoundingClientRect().top + window.scrollY - 120;
+                    window.scrollTo({ top: y, behavior: 'smooth' });
+                }, 150);
+            }
+        }
+    });
+
+    /* ── DOMAIN SELECT ── */
+    domainSel.addEventListener('change', function () {
+        const val  = this.value;
+        const text = this.options[this.selectedIndex].text;
+
+        close(topicSection,      F.topicSel);
+        close(customTopicInline, F.customTopic);
+        close(customDomSect,     F.customDomain);
+        topicSel.innerHTML = '';
+
+        if (val === 'other_domain') {
+            open(customDomSect, F.customDomain);
+            scrollTo(customDomSect);
+        } else if (TOPICS[val]) {
+            topicLabel.innerHTML = `Topic — ${text} <span class="req">*</span>`;
+            const def = new Option('Select a specific topic', '', true, true);
+            def.disabled = true;
+            topicSel.appendChild(def);
+            TOPICS[val].forEach(t => topicSel.appendChild(new Option(t, t)));
+            open(topicSection, F.topicSel);
+            scrollTo(topicSection);
+        }
+
+        if (!declarationSect.classList.contains('open')) {
+            open(declarationSect, F.declaration);
+            /* ── UPGRADE 4: Slide up sticky button on mobile ── */
+            btnWrap.classList.add('show-sticky');
+        }
+    });
+
+    /* ── TOPIC SELECT ── */
+    topicSel.addEventListener('change', function () {
+        if (this.value === 'Other (Custom Topic)') {
+            open(customTopicInline, F.customTopic);
+            scrollTo(customTopicInline);
+        } else {
+            close(customTopicInline, F.customTopic);
+        }
+    });
+
+    /* ── TOAST ── */
+    let toastTimer;
+    function showToast(msg, isError) {
+        clearTimeout(toastTimer);
+        toast.textContent = msg;
+        toast.className   = 'toast show' + (isError ? ' error' : '');
+        toastTimer = setTimeout(() => toast.classList.remove('show'), 4500);
+    }
+
+    /* ── SUBMIT ── */
+    form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+
+        if (!form.checkValidity()) {
+            const bad = Array.from(form.querySelectorAll(':invalid')).find(isVisible);
+            if (bad) { bad.focus(); bad.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+            showToast('Please complete all required fields.', true);
+            return;
+        }
+
+        submitBtn.disabled    = true;
+        submitBtn.textContent = 'Submitting…';
 
         try {
-            // POST to Google Apps Script
-            const response = await fetch(GOOGLE_SCRIPT_WEB_APP_URL, {
+            await fetch(SCRIPT_URL, {
                 method: 'POST',
-                body: formData,
-                // mode: 'no-cors' 
+                body:   new FormData(form),
+                mode:   'no-cors'
             });
-
-            // Success state
-            form.reset();
-            
-            // Re-hide dynamic sections
-            dynamicWrapper.classList.add('hidden');
-            dynamicWrapper.style.position = "absolute";
-            customWrapper.classList.add('hidden');
-            customWrapper.style.position = "absolute";
-            declarationSection.classList.add('hidden');
-            declarationSection.classList.remove('fade-in');
-            
-            updateProgress(); // resets bar to 0
-            
-            showNotification("Registration successful! Welcome to CLEAR LAW.");
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            
-        } catch (error) {
-            console.error('Submission Error:', error);
-            showNotification("Connection error. Please try again.", true);
-        } finally {
-            submitBtn.disabled = false;
-            submitBtn.innerText = 'Submit Registration';
+            handleSuccess();
+        } catch (err) {
+            console.error(err);
+            showToast('Network error — please try again.', true);
+            submitBtn.disabled    = false;
+            submitBtn.textContent = 'Submit Registration';
         }
     });
 
-    // Initial Progress Calculation
+    function handleSuccess() {
+        /* Clear localStorage on success */
+        try { localStorage.removeItem(DRAFT_KEY); } catch(e) {}
+
+        form.style.transition = 'opacity 0.35s';
+        form.style.opacity    = '0';
+        setTimeout(() => {
+            form.style.display = 'none';
+            form.reset();
+            close(topicSection,      F.topicSel);
+            close(customTopicInline, F.customTopic);
+            close(customDomSect,     F.customDomain);
+            close(declarationSect,   F.declaration);
+            topicSel.innerHTML = '';
+            btnWrap.classList.remove('show-sticky');
+            draftBanner.classList.remove('show');
+            updateProgress();
+
+            successScreen.classList.add('show');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }, 380);
+    }
+
+    /* ── INIT: restore draft on page load ── */
+    restoreDraft();
     updateProgress();
+
+})();
 </script>
 </body>
 </html>
