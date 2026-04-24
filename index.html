@@ -4,10 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <title>CLEAR LAW | Author Registration</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
     <style>
-        /* ── DESIGN TOKENS ── */
         :root {
             --bg:           #000000;
             --text-main:    #FFFFFF;
@@ -59,17 +58,46 @@
         /* ── HEADER ── */
         header { margin-bottom: 56px; }
 
+        .brand-block {
+            margin-bottom: 48px;
+            overflow: hidden;
+        }
+
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-60px); }
+            to   { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes slideInLeftSub {
+            from { opacity: 0; transform: translateX(-40px); }
+            to   { opacity: 1; transform: translateX(0); }
+        }
+
         .brand {
-            font-weight: 200;
-            font-size: 11px;
-            letter-spacing: 5px;
+            font-weight: 700;
+            font-size: clamp(36px, 10vw, 58px);
+            letter-spacing: 2px;
             text-transform: uppercase;
+            color: #ffffff;
+            line-height: 1;
+            margin-bottom: 10px;
+            display: block;
+            opacity: 0;
+            animation: slideInLeft 0.9s cubic-bezier(0.16,1,0.3,1) 0.3s forwards;
+        }
+
+        .brand-tagline {
+            font-weight: 300;
+            font-size: 13px;
+            letter-spacing: 1px;
             color: var(--text-muted);
-            margin-bottom: 18px;
+            display: block;
+            opacity: 0;
+            animation: slideInLeftSub 0.9s cubic-bezier(0.16,1,0.3,1) 0.55s forwards;
         }
 
         h1 {
-            font-weight: 300;
+            font-weight: 500;
             font-size: clamp(24px, 5vw, 30px);
             letter-spacing: 3px;
             text-transform: uppercase;
@@ -78,7 +106,7 @@
         }
 
         header p {
-            font-weight: 300;
+            font-weight: 400;
             font-size: 13px;
             color: var(--text-muted);
             line-height: 1.85;
@@ -94,7 +122,7 @@
 
         /* ── SECTION HEADINGS ── */
         h2 {
-            font-weight: 400;
+            font-weight: 500;
             font-size: 10px;
             letter-spacing: 3px;
             text-transform: uppercase;
@@ -146,12 +174,23 @@
             border-bottom: 1px solid var(--border-idle);
             color: var(--text-main);
             font-family: 'Montserrat', sans-serif;
-            font-size: 16px; /* exactly 16px — prevents iOS auto-zoom */
-            font-weight: 300;
+            font-size: 16px;
+            font-weight: 500;
             padding: 18px 0 10px;
             outline: none;
             border-radius: 0;
             transition: border-color var(--fast);
+            caret-color: #fff;
+            -webkit-text-fill-color: #fff;
+        }
+
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover,
+        input:-webkit-autofill:focus,
+        input:-webkit-autofill:active {
+            -webkit-box-shadow: 0 0 0 1000px #000 inset !important;
+            -webkit-text-fill-color: #fff !important;
+            transition: background-color 9999s ease-in-out 0s;
             caret-color: #fff;
         }
 
@@ -160,6 +199,8 @@
             min-height: 80px;
             padding-top: 28px;
             line-height: 1.7;
+            font-weight: 500;
+            -webkit-text-fill-color: #fff;
         }
 
         input::placeholder, textarea::placeholder { color: transparent; }
@@ -170,7 +211,7 @@
         textarea:not(:placeholder-shown) ~ .float-label {
             top: -2px;
             font-size: 9px;
-            font-weight: 500;
+            font-weight: 600;
             letter-spacing: 2px;
             text-transform: uppercase;
             color: var(--text-main);
@@ -183,7 +224,7 @@
         .static-label {
             display: block;
             font-size: 9px;
-            font-weight: 500;
+            font-weight: 600;
             letter-spacing: 2px;
             text-transform: uppercase;
             color: var(--text-muted);
@@ -191,7 +232,6 @@
         }
 
         .select-wrap { position: relative; }
-        /* Custom chevron arrow */
         .select-wrap::after {
             content: '';
             position: absolute;
@@ -211,9 +251,9 @@
             border-bottom: 1px solid var(--border-idle);
             color: var(--text-main);
             font-family: 'Montserrat', sans-serif;
-            font-size: 16px; /* exactly 16px — prevents iOS auto-zoom */
-            font-weight: 300;
-            padding: 16px 28px 16px 0; /* larger touch area */
+            font-size: 16px;
+            font-weight: 500;
+            padding: 16px 28px 16px 0;
             outline: none;
             cursor: pointer;
             appearance: none;
@@ -233,7 +273,7 @@
         /* ── EDITORIAL NOTE ── */
         .note {
             font-size: 12px;
-            font-weight: 300;
+            font-weight: 400;
             color: var(--text-muted);
             border-left: 1px solid var(--border-idle);
             padding: 10px 16px;
@@ -241,7 +281,7 @@
             line-height: 1.7;
         }
 
-        /* ── CHECKBOX — Big Hit Thumb-Friendly Card ── */
+        /* ── CHECKBOX ── */
         .checkbox-group {
             display: flex;
             align-items: flex-start;
@@ -251,27 +291,26 @@
 
         .checkbox-group label {
             font-size: 13px;
-            font-weight: 300;
+            font-weight: 400;
             cursor: pointer;
             line-height: 1.6;
             color: var(--text-muted);
             transition: all var(--fast);
-            /* Large tap area with padding for the checkbox on the left */
             padding: 16px 16px 16px 50px;
             border-radius: 6px;
-            background: rgba(255,255,255,0.03);
+            background: transparent;
             border: 1px solid var(--border-idle);
             width: 100%;
         }
 
         .checkbox-group label:active {
-            background: rgba(255,255,255,0.07);
+            background: rgba(255,255,255,0.04);
         }
 
         input[type="checkbox"] {
             position: absolute;
             left: 16px;
-            top: 19px; /* align with first line of text */
+            top: 19px;
             appearance: none;
             -webkit-appearance: none;
             min-width: 20px;
@@ -281,16 +320,16 @@
             outline: none;
             background: transparent;
             transition: border-color var(--fast);
-            pointer-events: none; /* label handles the tap */
+            pointer-events: none;
             flex-shrink: 0;
         }
 
-        /* Light up entire card when checked */
         input[type="checkbox"]:checked ~ label,
         input[type="checkbox"]:checked + label {
             border-color: var(--text-main);
             color: var(--text-main);
-            background: rgba(255,255,255,0.07);
+            font-weight: 500;
+            background: transparent;
         }
 
         input[type="checkbox"]:checked { border-color: var(--text-main); }
@@ -325,7 +364,7 @@
             padding: 20px;
             font-family: 'Montserrat', sans-serif;
             font-size: 11px;
-            font-weight: 600;
+            font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 4px;
             cursor: pointer;
@@ -357,7 +396,7 @@
         #draft-banner {
             display: none;
             font-size: 11px;
-            font-weight: 400;
+            font-weight: 500;
             color: var(--text-muted);
             border: 1px solid var(--border-idle);
             padding: 10px 16px;
@@ -372,7 +411,7 @@
             color: var(--text-muted);
             font-family: 'Montserrat', sans-serif;
             font-size: 10px;
-            font-weight: 500;
+            font-weight: 600;
             letter-spacing: 1px;
             text-transform: uppercase;
             cursor: pointer;
@@ -394,7 +433,7 @@
             color: #000;
             padding: 14px 28px;
             font-size: 11px;
-            font-weight: 600;
+            font-weight: 700;
             letter-spacing: 2px;
             text-transform: uppercase;
             opacity: 0;
@@ -415,7 +454,7 @@
         }
         #successScreen.show { display: block; }
         #successScreen h2 {
-            font-weight: 200;
+            font-weight: 300;
             font-size: 28px;
             letter-spacing: 4px;
             text-transform: uppercase;
@@ -425,7 +464,7 @@
         }
         #successScreen h2::after { display: none; }
         #successScreen p {
-            font-weight: 300;
+            font-weight: 400;
             font-size: 13px;
             color: var(--text-muted);
             line-height: 1.9;
@@ -442,15 +481,141 @@
         .check-circle svg { stroke: #fff; }
 
         /* ══════════════════════════════════════════
-           MOBILE OVERRIDES
+           ANIMATION & MICRO-INTERACTION LAYER
         ══════════════════════════════════════════ */
+
+        @keyframes fadeRise {
+            from { opacity: 0; transform: translateY(22px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        form > .form-group {
+            opacity: 0;
+            animation: fadeRise 0.65s cubic-bezier(0.16,1,0.3,1) both;
+        }
+        form > .form-group:nth-child(1) { animation-delay: 0.65s; }
+        form > .form-group:nth-child(2) { animation-delay: 0.77s; }
+        form > .form-group:nth-child(3) { animation-delay: 0.89s; }
+        form > .form-group:nth-child(4) { animation-delay: 1.01s; }
+        form > .form-group:nth-child(5) { animation-delay: 1.13s; }
+        form > .form-group:nth-child(6) { animation-delay: 1.25s; }
+
+        header h1  { opacity: 0; animation: fadeRise 0.65s cubic-bezier(0.16,1,0.3,1) 0.72s both; }
+        header > p { opacity: 0; animation: fadeRise 0.65s cubic-bezier(0.16,1,0.3,1) 0.88s both; }
+        #draft-banner { opacity: 0; animation: fadeRise 0.5s cubic-bezier(0.16,1,0.3,1) 1.0s both; }
+
+        h2 { opacity: 0; }
+        h2.animate { animation: fadeRise 0.55s cubic-bezier(0.16,1,0.3,1) both; }
+
+        @keyframes lineGrow {
+            from { transform: scaleX(0); transform-origin: left; }
+            to   { transform: scaleX(1); transform-origin: left; }
+        }
+        h2.animate::after { animation: lineGrow 0.55s cubic-bezier(0.16,1,0.3,1) 0.15s both; }
+
+        .collapsible .form-group {
+            opacity: 0;
+            transform: translateY(14px);
+            transition: opacity 0.42s cubic-bezier(0.16,1,0.3,1), transform 0.42s cubic-bezier(0.16,1,0.3,1);
+        }
+        .collapsible.open .form-group:nth-child(1) { opacity:1; transform:none; transition-delay:0.07s; }
+        .collapsible.open .form-group:nth-child(2) { opacity:1; transform:none; transition-delay:0.15s; }
+        .collapsible.open .form-group:nth-child(3) { opacity:1; transform:none; transition-delay:0.23s; }
+        .collapsible.open .form-group:nth-child(4) { opacity:1; transform:none; transition-delay:0.31s; }
+
+        .note {
+            opacity: 0;
+            transform: translateY(8px);
+            transition: opacity 0.4s cubic-bezier(0.16,1,0.3,1) 0.28s, transform 0.4s cubic-bezier(0.16,1,0.3,1) 0.28s;
+        }
+        .collapsible.open .note { opacity:1; transform:none; }
+
+        .input-wrapper { transition: transform 0.3s cubic-bezier(0.16,1,0.3,1); }
+        .input-wrapper:focus-within { transform: translateY(-2px); }
+
+        .input-wrapper::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 50%;
+            width: 0; height: 1px;
+            background: #fff;
+            transition: width 0.38s cubic-bezier(0.16,1,0.3,1), left 0.38s cubic-bezier(0.16,1,0.3,1);
+            pointer-events: none;
+        }
+        .input-wrapper:focus-within::after { width: 100%; left: 0; }
+
+        .input-wrapper .valid-tick {
+            position: absolute;
+            right: 0; top: 50%;
+            transform: translateY(-50%) scale(0);
+            opacity: 0;
+            transition: transform 0.35s cubic-bezier(0.175,0.885,0.32,1.1), opacity 0.28s;
+        }
+        .input-wrapper .valid-tick svg {
+            display: block;
+            width: 15px; height: 15px;
+            stroke: rgba(255,255,255,0.38);
+            fill: none;
+            stroke-width: 2;
+        }
+        .input-wrapper.is-valid .valid-tick { transform: translateY(-50%) scale(1); opacity: 1; }
+
+        .select-wrap::after {
+            transition: transform 0.28s cubic-bezier(0.16,1,0.3,1), border-top-color 0.28s;
+        }
+        .select-wrap:focus-within::after {
+            transform: translateY(-50%) rotate(180deg);
+            border-top-color: rgba(255,255,255,0.8);
+        }
+
+        .checkbox-group { transition: transform 0.18s cubic-bezier(0.175,0.885,0.32,1.1); }
+        .checkbox-group:active { transform: scale(0.982); }
+
+        button[type="submit"] { isolation: isolate; }
+        button[type="submit"]::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -80%;
+            width: 50%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+            transform: skewX(-18deg);
+            transition: none;
+            pointer-events: none;
+        }
+        button[type="submit"]:hover::before {
+            left: 160%;
+            transition: left 0.52s cubic-bezier(0.16,1,0.3,1);
+        }
+
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            width: 6px; height: 6px;
+            background: rgba(0,0,0,0.15);
+            transform: scale(0);
+            animation: rippleOut 0.65s cubic-bezier(0.16,1,0.3,1) forwards;
+            pointer-events: none;
+        }
+        @keyframes rippleOut {
+            to { transform: scale(80); opacity: 0; }
+        }
+
+        @keyframes progressPulse {
+            0%,100% { box-shadow: 0 0 8px rgba(255,255,255,0.35); }
+            50%      { box-shadow: 0 0 20px rgba(255,255,255,0.75); }
+        }
+        #progress-bar.complete { animation: progressPulse 1.6s ease-in-out infinite; }
+
+        #successScreen.show .check-circle { animation: fadeRise 0.5s cubic-bezier(0.175,0.885,0.32,1.1) 0.1s both; }
+        #successScreen.show h2 { opacity:1; animation: fadeRise 0.55s cubic-bezier(0.16,1,0.3,1) 0.25s both; }
+        #successScreen.show p  { opacity:1; animation: fadeRise 0.55s cubic-bezier(0.16,1,0.3,1) 0.40s both; }
+
         @media (max-width: 600px) {
-            body { padding: 40px 18px 160px; } /* extra bottom for sticky btn */
+            body { padding: 40px 18px 160px; }
             h1   { font-size: 24px; letter-spacing: 2px; }
             h2   { margin: 44px 0 24px; }
             .form-group { margin-bottom: 30px; }
 
-            /* Toast — full width */
             .toast {
                 left: 16px; right: 16px; bottom: 16px;
                 transform: translateY(60px);
@@ -459,12 +624,11 @@
             }
             .toast.show { transform: translateY(0); }
 
-            /* Sticky submit button in thumb zone */
             .btn-wrap {
                 position: fixed;
                 bottom: 0; left: 0;
                 width: 100%;
-                padding: 16px 16px 36px; /* 36px for iOS home bar */
+                padding: 16px 16px 36px;
                 background: linear-gradient(to top, #000 65%, transparent);
                 margin-top: 0;
                 z-index: 500;
@@ -474,10 +638,8 @@
 
             .btn-wrap.show-sticky { transform: translateY(0); }
 
-            /* Slightly rounded for native app feel */
             button[type="submit"] { border-radius: 10px; }
 
-            /* Form padding so last field isn't hidden behind sticky btn */
             form { padding-bottom: 100px; }
         }
     </style>
@@ -489,7 +651,10 @@
 <div class="container">
 
     <header>
-        <p class="brand">Clearlaw</p>
+        <div class="brand-block">
+            <span class="brand">Clear Law</span>
+            <span class="brand-tagline">Clarity Over Clutter</span>
+        </div>
         <h1>Author Registration</h1>
         <p>
             Thank you for your interest in getting your writing published on CLEARLAW.
@@ -499,7 +664,6 @@
         </p>
     </header>
 
-    <!-- Draft restored banner -->
     <div id="draft-banner">
         <span>Your previous progress has been restored.</span>
         <button id="draft-clear" type="button">Clear draft</button>
@@ -507,7 +671,6 @@
 
     <form id="registrationForm" novalidate>
 
-        <!-- ── SECTION 1 ── -->
         <div class="form-group">
             <div class="input-wrapper">
                 <input type="email" id="email" name="email" placeholder=" "
@@ -561,7 +724,6 @@
             </div>
         </div>
 
-        <!-- ── SECTION 2 ── -->
         <h2>Writing Preferences</h2>
 
         <div class="form-group">
@@ -590,18 +752,15 @@
             </div>
         </div>
 
-        <!-- Topic dropdown (for known domains) -->
         <div class="collapsible" id="topic_section">
             <div class="form-group">
                 <label class="static-label" id="topic_label" for="selected_topic">Specific Topic <span class="req">*</span></label>
                 <div class="select-wrap">
                     <select id="selected_topic" name="selected_topic">
-                        <!-- populated by JS -->
                     </select>
                 </div>
             </div>
 
-            <!-- Revealed when user picks "Other (Custom Topic)" -->
             <div class="collapsible" id="custom_topic_inline">
                 <div class="form-group">
                     <div class="input-wrapper">
@@ -621,7 +780,6 @@
             </div>
         </div>
 
-        <!-- Custom domain fields -->
         <div class="collapsible" id="custom_domain_section">
             <div class="form-group">
                 <div class="input-wrapper">
@@ -640,7 +798,6 @@
             <div class="note">Custom domains &amp; topics are subject to editorial review. Submission does not guarantee acceptance.</div>
         </div>
 
-        <!-- ── SECTION 3: Declaration ── -->
         <div class="collapsible" id="declaration_section">
 
             <h2>Author's Declaration</h2>
@@ -673,7 +830,6 @@
 
     </form>
 
-    <!-- Success screen -->
     <div id="successScreen">
         <div class="check-circle">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="1.5"><polyline points="20 6 9 17 4 12"/></svg>
@@ -682,7 +838,7 @@
         <p>Thank you for joining CLEARLAW.<br>Our editorial team will be in touch shortly.</p>
     </div>
 
-</div><!-- /container -->
+</div>
 
 <div id="toast" class="toast" role="alert" aria-live="polite">Message</div>
 
@@ -690,11 +846,9 @@
 (function () {
     'use strict';
 
-    /* ── CONFIG ── */
-    const SCRIPT_URL = 'https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec';
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxAX9ajKf3L8jWYUVzrMq-jEJrHrEcji-RlGMJEdTsXWDS29x5Ozp4u_CH_2EE5NCOiBQ/exec';
     const DRAFT_KEY  = 'clearLawDraft';
 
-    /* ── TOPIC DATA ── */
     const TOPICS = {
         contract_law:           ['Formation & Validity','Breach & Damages','Specific Relief Act','E-Contracts','Indemnity & Guarantee','Other (Custom Topic)'],
         const_law:              ['Fundamental Rights','Writ Jurisdiction','Basic Structure Doctrine','Administrative Actions','Federalism','Other (Custom Topic)'],
@@ -714,7 +868,6 @@
         emerging_areas:         ['Space Law','Sports Law','Aviation Law','Gaming & E-Sports Regulations','Climate Change Litigation','Other (Custom Topic)']
     };
 
-    /* ── DOM REFS ── */
     const form              = document.getElementById('registrationForm');
     const successScreen     = document.getElementById('successScreen');
     const progressBar       = document.getElementById('progress-bar');
@@ -740,7 +893,6 @@
         declaration:  [document.getElementById('timeline'), document.getElementById('agreement')]
     };
 
-    /* ── OPEN / CLOSE COLLAPSIBLES ── */
     function open(el, fields) {
         el.classList.add('open');
         if (fields) fields.forEach(f => f.setAttribute('required', ''));
@@ -757,7 +909,6 @@
         setTimeout(updateProgress, 60);
     }
 
-    /* ── VISIBILITY CHECK (for progress bar & validation) ── */
     function isVisible(el) {
         let node = el.parentElement;
         while (node && node !== form) {
@@ -767,30 +918,25 @@
         return true;
     }
 
-    /* ── PROGRESS BAR ── */
     function updateProgress() {
         const required = Array.from(form.querySelectorAll('[required]')).filter(isVisible);
         const total    = required.length;
         const filled   = required.filter(f => f.type === 'checkbox' ? f.checked : f.value.trim() !== '').length;
         progressBar.style.width = total ? `${(filled / total) * 100}%` : '0%';
+        progressBar.classList.toggle('complete', total > 0 && filled === total);
     }
 
     form.addEventListener('input',  updateProgress);
     form.addEventListener('change', updateProgress);
 
-    /* ── SCROLL HELPER ── */
     function scrollTo(el) {
         setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 230);
     }
 
-    /* ══════════════════════════════════════════
-       UPGRADE 1: AUTO-SAVE TO LOCALSTORAGE
-    ══════════════════════════════════════════ */
     function saveDraft() {
         try {
             const data = {};
             new FormData(form).forEach((v, k) => data[k] = v);
-            // Also capture checkbox state (FormData omits unchecked)
             const cb = document.getElementById('agreement');
             data['agreement_confirmation'] = cb.checked ? 'on' : '';
             localStorage.setItem(DRAFT_KEY, JSON.stringify(data));
@@ -806,7 +952,6 @@
             if (!saved) return;
             const data = JSON.parse(saved);
 
-            // Restore simple fields first
             Object.keys(data).forEach(key => {
                 const el = form.elements[key];
                 if (!el) return;
@@ -817,12 +962,9 @@
                 }
             });
 
-            // Trigger domain logic to reopen correct sections
             if (data.domain) {
                 domainSel.value = data.domain;
                 domainSel.dispatchEvent(new Event('change'));
-
-                // Restore topic after sections animate open
                 setTimeout(() => {
                     if (data.selected_topic) {
                         topicSel.value = data.selected_topic;
@@ -850,18 +992,12 @@
         updateProgress();
     });
 
-    /* ══════════════════════════════════════════
-       UPGRADE 2: SMART INPUT MASKING
-    ══════════════════════════════════════════ */
-
-    // Auto-Title Case for name
     nameInput.addEventListener('input', function () {
         const pos = this.selectionStart;
         this.value = this.value.replace(/\b\w/g, c => c.toUpperCase());
         this.setSelectionRange(pos, pos);
     });
 
-    // Strip non-phone characters (allow digits, +, -, spaces)
     phoneInput.addEventListener('input', function () {
         const pos = this.selectionStart;
         const cleaned = this.value.replace(/[^\d+\-\s]/g, '');
@@ -871,9 +1007,6 @@
         }
     });
 
-    /* ══════════════════════════════════════════
-       UPGRADE 3: ENTER KEY ADVANCES TO NEXT FIELD
-    ══════════════════════════════════════════ */
     form.addEventListener('keydown', function (e) {
         if (e.key === 'Enter' && e.target.tagName === 'INPUT') {
             e.preventDefault();
@@ -885,7 +1018,6 @@
             if (idx > -1 && idx < focusable.length - 1) {
                 const next = focusable[idx + 1];
                 next.focus();
-                // Scroll so it's not hidden under the virtual keyboard
                 setTimeout(() => {
                     const y = next.getBoundingClientRect().top + window.scrollY - 120;
                     window.scrollTo({ top: y, behavior: 'smooth' });
@@ -894,7 +1026,6 @@
         }
     });
 
-    /* ── DOMAIN SELECT ── */
     domainSel.addEventListener('change', function () {
         const val  = this.value;
         const text = this.options[this.selectedIndex].text;
@@ -919,12 +1050,10 @@
 
         if (!declarationSect.classList.contains('open')) {
             open(declarationSect, F.declaration);
-            /* ── UPGRADE 4: Slide up sticky button on mobile ── */
             btnWrap.classList.add('show-sticky');
         }
     });
 
-    /* ── TOPIC SELECT ── */
     topicSel.addEventListener('change', function () {
         if (this.value === 'Other (Custom Topic)') {
             open(customTopicInline, F.customTopic);
@@ -934,7 +1063,6 @@
         }
     });
 
-    /* ── TOAST ── */
     let toastTimer;
     function showToast(msg, isError) {
         clearTimeout(toastTimer);
@@ -943,7 +1071,6 @@
         toastTimer = setTimeout(() => toast.classList.remove('show'), 4500);
     }
 
-    /* ── SUBMIT ── */
     form.addEventListener('submit', async function (e) {
         e.preventDefault();
 
@@ -973,7 +1100,6 @@
     });
 
     function handleSuccess() {
-        /* Clear localStorage on success */
         try { localStorage.removeItem(DRAFT_KEY); } catch(e) {}
 
         form.style.transition = 'opacity 0.35s';
@@ -995,9 +1121,52 @@
         }, 380);
     }
 
-    /* ── INIT: restore draft on page load ── */
     restoreDraft();
     updateProgress();
+
+    /* ── Scroll-reveal: h2 headings ── */
+    const headingObserver = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                e.target.classList.add('animate');
+                headingObserver.unobserve(e.target);
+            }
+        });
+    }, { threshold: 0.3 });
+    document.querySelectorAll('h2').forEach(h => headingObserver.observe(h));
+
+    /* ── Valid-tick on filled inputs ── */
+    document.querySelectorAll('.input-wrapper').forEach(wrapper => {
+        const tick = document.createElement('span');
+        tick.className = 'valid-tick';
+        tick.innerHTML = '<svg viewBox="0 0 16 16"><polyline points="3 8 6.5 11.5 13 4.5"/></svg>';
+        wrapper.appendChild(tick);
+        const input = wrapper.querySelector('input, textarea');
+        if (!input) return;
+        function checkValid() {
+            wrapper.classList.toggle('is-valid', input.value.trim().length > 0 && input.checkValidity());
+        }
+        input.addEventListener('input', checkValid);
+        input.addEventListener('blur',  checkValid);
+    });
+
+    /* ── Submit button ripple ── */
+    submitBtn.addEventListener('mousedown', function(e) {
+        const rect = this.getBoundingClientRect();
+        const r = document.createElement('span');
+        r.className = 'ripple';
+        r.style.left = (e.clientX - rect.left - 3) + 'px';
+        r.style.top  = (e.clientY - rect.top  - 3) + 'px';
+        this.appendChild(r);
+        setTimeout(() => r.remove(), 700);
+    });
+
+    /* ── Select: lift on focus ── */
+    document.querySelectorAll('select').forEach(sel => {
+        const wrap = sel.closest('.select-wrap');
+        sel.addEventListener('focus', () => { wrap.style.transform = 'translateY(-1px)'; wrap.style.transition = 'transform 0.3s cubic-bezier(0.16,1,0.3,1)'; });
+        sel.addEventListener('blur',  () => { wrap.style.transform = ''; });
+    });
 
 })();
 </script>
